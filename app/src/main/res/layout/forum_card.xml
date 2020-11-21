@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="12dp"
+    android:paddingBottom="12dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/forum_card_image_container"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#E3E6EA">
+
+        <ImageView
+            android:id="@+id/forum_card_slika"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:tint="#888"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/forum_card_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textAlignment="viewStart"
+        app:layout_constraintTop_toBottomOf="@id/forum_card_image_container"
+        android:text="How you can be a great product designer in the world ?"
+        android:fontFamily="@font/opensans_bold"
+        android:textSize="22sp"
+        android:textColor="#222222"/>
+
+
+    <ImageView
+        android:id="@+id/forum_card_username_photo"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:src="@drawable/person_icon"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forum_card_title" />
+
+    <TextView
+        android:id="@+id/forum_card_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/forum_card_username_photo"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="9dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintTop_toBottomOf="@id/forum_card_title"
+        android:text="Bojan Dolić"
+        android:fontFamily="@font/opensans_regular"
+        android:textSize="17sp"/>
+
+
+    <TextView
+        android:id="@+id/forum_card_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="9dp"
+        app:layout_constraintTop_toBottomOf="@id/forum_card_title"
+        android:text="Novembar 19, 2020"
+        android:textAlignment="viewEnd"
+        android:fontFamily="@font/opensans_regular"
+        android:textSize="17sp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

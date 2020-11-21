@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/leafy_vision_bottomSheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:behavior_hideable="true"
+    app:contentPaddingTop="12dp"
+    app:contentPaddingBottom="12dp"
+    app:contentPaddingLeft="12dp"
+    app:contentPaddingRight="12dp"
+    app:shapeAppearanceOverlay="@style/topCornersRadiusCard"
+    app:cardElevation="8dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/leafy_vision_bottomSheet_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/corn_rust"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/roundedImage20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/leafy_vision_bottomSheet_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leafy_vision_bottom_sheet_title_dummy"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="19sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginStart="14dp"
+        app:layout_constraintStart_toEndOf="@id/leafy_vision_bottomSheet_image"
+        app:layout_constraintBottom_toBottomOf="@id/leafy_vision_bottomSheet_image"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/leafy_vision_bottomSheet_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leafy_vision_bottomSheet_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/nunito_light"
+        android:textSize="17sp"
+        android:layout_marginTop="24dp"
+        android:maxLines="5"
+        android:ellipsize="end"
+        android:text="@string/leafy_vision_bottom_sheet_desc" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/leafy_vision_bottomSheet_procitajBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="@string/procitaj_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leafy_vision_bottomSheet_desc"
+        android:layout_marginTop="24dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

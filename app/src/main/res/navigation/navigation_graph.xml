@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/startScreenFragment">
+
+    <fragment
+        android:id="@+id/startScreenFragment"
+        android:name="com.electroniccode.leafy.fragments.StartScreenFragment"
+        android:label="fragment_start_screen"
+        tools:layout="@layout/fragment_start_screen" >
+
+        <action
+            android:id="@+id/action_startScreenFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.electroniccode.leafy.fragments.RegisterFragment"
+        android:label="register_fragment"
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_graph"/>
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.electroniccode.leafy.fragments.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectPlantFragment"
+            app:destination="@id/selectPlantFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_mainFragment_to_forumFragment"
+            app:destination="@id/forumFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.electroniccode.leafy.fragments.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leafyVisionFragment"
+        android:name="com.electroniccode.leafy.fragments.LeafyVisionFragment"
+        android:label="leafy_vision_fragment"
+        tools:layout="@layout/leafy_vision_fragment" >
+        <argument
+            android:name="plant_type"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_leafyVisionFragment_to_bookViewerFragment"
+            app:destination="@id/bookViewerFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectPlantFragment"
+        android:name="com.electroniccode.leafy.fragments.SelectPlantFragment"
+        android:label="fragment_select_plant"
+        tools:layout="@layout/fragment_select_plant" >
+        <action
+            android:id="@+id/action_selectPlantFragment_to_leafyVisionFragment"
+            app:destination="@id/leafyVisionFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookViewerFragment"
+        android:name="com.electroniccode.leafy.fragments.BookViewerFragment"
+        android:label=""
+        tools:layout="@layout/book_viewer_fragment" >
+        <argument
+            android:name="bolest"
+            app:argType="com.electroniccode.leafy.models.Bolest"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="tip"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_bookViewerFragment_to_leafyVisionFragment"
+            app:popUpTo="@id/leafyVisionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forumFragment"
+        android:name="com.electroniccode.leafy.fragments.ForumFragment"
+        android:label="forum_fragment"
+        tools:layout="@layout/forum_fragment" >
+        <action
+            android:id="@+id/action_forumFragment_to_createPitanjeFragment"
+            app:destination="@id/createPitanjeFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPitanjeFragment"
+        android:name="com.electroniccode.leafy.fragments.CreatePitanjeFragment"
+        android:label="create_pitanje_fragment"
+        tools:layout="@layout/create_pitanje_fragment" />
+
+</navigation>

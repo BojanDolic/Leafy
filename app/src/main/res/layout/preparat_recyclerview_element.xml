@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginTop="38dp"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            android:clickable="true"
+            app:cardBackgroundColor="@color/darkGreen"
+            android:foreground="?attr/selectableItemBackground">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_overlay4"
+                android:backgroundTint="#017146">
+
+                <View
+                    android:id="@+id/image_ruler"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:alpha="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/leafy_book_naziv_preparata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Retengo"
+                    app:layout_constraintStart_toEndOf="@id/image_ruler"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/opensans_extrabold"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"/>
+
+
+                <TextView
+                    android:id="@+id/leafy_book_vrsta_preparata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fungicid"
+                    app:layout_constraintStart_toEndOf="@id/image_ruler"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/leafy_book_naziv_preparata"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="24dp"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/opensans_lightitalic"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/leafy_book_slika_preparata"
+            android:layout_width="120dp"
+            android:layout_height="200dp"
+            android:elevation="9dp"
+            android:src="@drawable/retengo_shadow"/>
+
+
+
+    </FrameLayout>
+
+</LinearLayout>

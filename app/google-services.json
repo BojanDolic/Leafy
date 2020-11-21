@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "906075293476",
+    "firebase_url": "https://leafy-aa873.firebaseio.com",
+    "project_id": "leafy-aa873",
+    "storage_bucket": "leafy-aa873.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906075293476:android:145846f935e9762979d5b1",
+        "android_client_info": {
+          "package_name": "com.electroniccode.leafy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906075293476-enqgts52ermpt6fou6257gqnkqlmqlog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.electroniccode.leafy",
+            "certificate_hash": "20be8b19f79ca45dc6656ae6eb144c503c7b2ed8"
+          }
+        },
+        {
+          "client_id": "906075293476-mpt350p9p5lmc9hbceb13s4uln7hfagt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCExR4XFmtdMCLYhUQd-BLCLt7R62GdAxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906075293476-mpt350p9p5lmc9hbceb13s4uln7hfagt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

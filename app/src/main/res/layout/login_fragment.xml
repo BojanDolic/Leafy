@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:paddingTop="26dp"
+    android:background="#f8f7fc"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.RegisterFragment">
+
+    <ImageView
+        android:id="@+id/leafy_banner_img"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toTopOf="@id/registracija_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/registracija_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/leafy_banner_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="36dp"
+        app:contentPadding="18dp"
+        app:cardCornerRadius="9dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/prijava_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/prijava_text"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/opensans_extrabold" />
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_input_box"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/prijava_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Unesite vaš E-mail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                app:boxBackgroundColor="#fff"
+                app:boxStrokeWidth="1dp"
+                app:boxCornerRadiusBottomEnd="6dp"
+                app:boxCornerRadiusBottomStart="6dp"
+                app:boxCornerRadiusTopEnd="6dp"
+                app:boxCornerRadiusTopStart="6dp"
+                android:layout_marginTop="24dp"
+                app:startIconDrawable="@drawable/email_icon"
+                app:startIconTint="@color/darkGreen"
+                app:boxStrokeErrorColor="@color/errorRed"
+                app:errorIconTint="@color/errorRed">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/opensans_light"
+                    android:inputType="textEmailAddress"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_input_box"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/email_input_box"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Unesite vašu lozinku"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                app:boxBackgroundColor="#fff"
+                app:boxStrokeWidth="1dp"
+                app:boxCornerRadiusBottomEnd="6dp"
+                app:boxCornerRadiusBottomStart="6dp"
+                app:boxCornerRadiusTopEnd="6dp"
+                app:boxCornerRadiusTopStart="6dp"
+                android:layout_marginTop="24dp"
+                app:startIconDrawable="@drawable/lock_icon"
+                app:startIconTint="@color/darkGreen"
+                app:boxStrokeErrorColor="@color/errorRed"
+                app:errorIconTint="@color/errorRed">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/opensans_light"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password_input_box"
+                android:text="@string/prijavi_se_text"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/opensans_bold" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/nemate_nalog_tekst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nemate kreiran nalog ?\nKliknite ovde"
+        android:textAlignment="center"
+        android:fontFamily="@font/opensans_light"
+        android:textColorLink="@color/mainColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:textSize="17sp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
