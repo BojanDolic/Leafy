@@ -61,6 +61,9 @@
             android:id="@+id/action_mainFragment_to_forumFragment"
             app:destination="@id/forumFragment"
             app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_profilFragment"
+            app:destination="@id/profilFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -122,17 +125,99 @@
     <fragment
         android:id="@+id/forumFragment"
         android:name="com.electroniccode.leafy.fragments.ForumFragment"
-        android:label="forum_fragment"
+        android:label="Forum"
         tools:layout="@layout/forum_fragment" >
         <action
             android:id="@+id/action_forumFragment_to_createPitanjeFragment"
             app:destination="@id/createPitanjeFragment"
             app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_forumFragment_to_pitanjeViewerFragment"
+            app:destination="@id/pitanjeViewerFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/forumFragment" />
     </fragment>
     <fragment
         android:id="@+id/createPitanjeFragment"
         android:name="com.electroniccode.leafy.fragments.CreatePitanjeFragment"
         android:label="create_pitanje_fragment"
         tools:layout="@layout/create_pitanje_fragment" />
+
+    <fragment
+        android:id="@+id/pitanjeViewerFragment"
+        android:name="com.electroniccode.leafy.fragments.PitanjeViewerFragment"
+        android:label="Pitanje"
+        tools:layout="@layout/pitanje_viewer_fragment" >
+        <argument
+            android:name="pitanjeObject"
+            app:argType="com.electroniccode.leafy.models.Pitanje"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_pitanjeViewerFragment_to_photoViewerActivity"
+            app:destination="@id/photoViewerActivity"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <activity
+        android:id="@+id/photoViewerActivity"
+        android:name="com.electroniccode.leafy.PhotoViewerActivity"
+        android:label="activity_photo_viewer"
+        tools:layout="@layout/activity_photo_viewer" >
+        <argument
+            android:name="photoUrl"
+            app:argType="string" />
+    </activity>
+    <fragment
+        android:id="@+id/profilFragment"
+        android:name="com.electroniccode.leafy.fragments.ProfilFragment"
+        android:label="profil_fragment"
+        tools:layout="@layout/profil_fragment" >
+        <action
+            android:id="@+id/action_profilFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profilFragment_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_profilFragment_to_editPostsFragment"
+            app:destination="@id/editPostsFragment"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_profilFragment_to_prodajnaMjestaFragment"
+            app:destination="@id/prodajnaMjestaFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        android:name="com.electroniccode.leafy.fragments.ProfileSettingsFragment"
+        android:label="profile_settings_fragment"
+        tools:layout="@layout/profile_settings_fragment" />
+    <fragment
+        android:id="@+id/editPostsFragment"
+        android:name="com.electroniccode.leafy.fragments.EditPostsFragment"
+        android:label="edit_posts_fragment"
+        tools:layout="@layout/edit_posts_fragment" />
+    <fragment
+        android:id="@+id/prodajnaMjestaFragment"
+        android:name="com.electroniccode.leafy.fragments.ProdajnaMjestaFragment"
+        android:label="fragment_prodajna_mjesta"
+        tools:layout="@layout/fragment_prodajna_mjesta" >
+        <action
+            android:id="@+id/action_prodajnaMjestaFragment_to_createProdajnoMjestoFragment"
+            app:destination="@id/createProdajnoMjestoFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/createProdajnoMjestoFragment"
+        android:name="com.electroniccode.leafy.fragments.CreateProdajnoMjestoFragment"
+        android:label="create_prodajno_mjesto_fragment"
+        tools:layout="@layout/create_prodajno_mjesto_fragment" />
 
 </navigation>

@@ -1,26 +1,44 @@
 package com.electroniccode.leafy.adapters
 
 import android.media.Image
-import android.text.Layout
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.models.Pitanje
+import com.electroniccode.leafy.models.User
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
-import com.google.type.Date
-import org.w3c.dom.Text
+import com.firebase.ui.firestore.paging.LoadingState
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.DateFormat
-import java.time.format.DateTimeFormatter
 
-class ForumPitanjaAdapter(options: FirestorePagingOptions<Pitanje>) : FirestorePagingAdapter<Pitanje, ForumPitanjaAdapter.PitanjeViewHolder>(options) {
+class ForumPitanjaAdapter(
+    options: FirestorePagingOptions<Pitanje>,
+    progress: CircularProgressIndicator,
+    val database: FirebaseFirestore) : FirestorePagingAdapter<Pitanje, ForumPitanjaAdapter.PitanjeViewHolder>(options) {
+
+
+    val progressIndicator = progress
+
+
+    interface OnPitanjeClickListener {
+        fun onPitanjeClicked(snapshot: DocumentSnapshot?)
+    }
+
+    lateinit var pitanjeClickInterface: OnPitanjeClickListener
+
+    fun setOnPitanjeClickListener(listener: OnPitanjeClickListener) {
+        pitanjeClickInterface = listener
+    }
 
 
     override fun onBindViewHolder(holder: PitanjeViewHolder, position: Int, model: Pitanje) {
@@ -43,7 +61,57 @@ class ForumPitanjaAdapter(options: FirestorePagingOptions<Pitanje>) : FirestoreP
                 .into(holder.slikaPitanja)
         }
 
+
+        database.document("korisnici/${model.idAutora}")
+            .get().addOnCompleteListener {
+
+                if (it.isSuccessful) {
+
+                    val user = it.result?.toObject(User::class.java)
+
+                    user?.let {
+                        holder.imeAutora.text = user.korisnickoIme
+                        Glide.with(holder.itemView.context)
+                            .load(user.slikaKorisnika)
+                            .transform(CircleCrop())
+                            .error(R.drawable.no_profile_pic_placeholder)
+                            .into(holder.slikaAutora)
+                    } ?: run {
+                        holder.imeAutora.text = "Nepoznato"
+                    }
+                } else {
+                    holder.imeAutora.text = "Nepoznato"
+                }
+
+
+            }
+
+
     }
+
+
+    override fun onLoadingStateChanged(state: LoadingState) {
+        super.onLoadingStateChanged(state)
+
+        when(state) {
+
+            LoadingState.LOADING_INITIAL -> {
+                progressIndicator.show()
+            }
+            LoadingState.FINISHED, LoadingState.ERROR -> {
+                progressIndicator.hide()
+                progressIndicator.setVisibilityAfterHide(View.GONE)
+            }
+
+
+
+        }
+
+
+    }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PitanjeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.forum_card, parent, false)
@@ -78,17 +146,30 @@ class ForumPitanjaAdapter(options: FirestorePagingOptions<Pitanje>) : FirestoreP
         var slikaPitanja: ImageView
         var pitanje: TextView
         var datum: TextView
+        var imeAutora: TextView
+        var slikaAutora: ImageView
 
         init {
 
             slikaPitanja = v.findViewById(R.id.forum_card_slika)
             pitanje = v.findViewById(R.id.forum_card_title)
             datum = v.findViewById(R.id.forum_card_date)
+            imeAutora = v.findViewById(R.id.forum_card_username)
+            slikaAutora = v.findViewById(R.id.forum_card_username_photo)
+
+            v.setOnClickListener {
+                pitanjeClickInterface.onPitanjeClicked(getItem(adapterPosition))
+            }
 
         }
 
 
+
+
     }
+
+
+
 
     /*fun updatePitanjaList(newPitanjaList: List<Pitanje>) {
 

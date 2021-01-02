@@ -145,9 +145,15 @@ class LeafyVisionFragment : Fragment() {
 
     }
 
+    /**
+     * Funkcija koja se poziva pri kliku na dugme skeniraj
+     * Funkcija skenira sliku te na osnovu rezultata skeniranja pretražuje
+     * informacije o toj bolesti na serveru.
+     */
+
     fun skenirajBiljku() {
 
-        if (viewModel.imageUri != null) {
+        viewModel.imageUri?.let {
 
             viewModel.labelImageUsingML(viewModel.imageUri!!, plantType).addOnCompleteListener {
 
@@ -156,10 +162,8 @@ class LeafyVisionFragment : Fragment() {
 
                     val bolestName = UtilFunctions.parseBolestName(it.result?.get(0)?.text!!)
 
-                    Log.d("TAG", "skenirajBiljku: $bolestName \n\n ${it.result?.get(0).toString()}\n${it.result?.get(0)?.confidence.toString()}")
-
                     if(TextUtils.equals(bolestName, "Zdrav")) {
-
+                        Snackbar.make(binding.root, "Skenirana biljka je zdrava !", Snackbar.LENGTH_SHORT).show()
                     } else {
 
                         viewModel.getBolestInfoFromDatabase(bolestName).addOnSuccessListener {
@@ -181,8 +185,6 @@ class LeafyVisionFragment : Fragment() {
 
                                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-                                //Log.d("TAG", "skenirajBiljku: " + bolest.toString())
-
                             }
                         }.addOnFailureListener {
                             Toast.makeText(
@@ -203,7 +205,7 @@ class LeafyVisionFragment : Fragment() {
 
             }
 
-        } else Toast.makeText(requireContext(), "Izaberite sliku", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(requireContext(), "Izaberite sliku", Toast.LENGTH_SHORT).show()
 
 
     }

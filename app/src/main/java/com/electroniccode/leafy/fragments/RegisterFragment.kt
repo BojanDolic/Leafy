@@ -18,7 +18,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.RegisterFragmentBinding
+import com.electroniccode.leafy.models.User
 import com.electroniccode.leafy.viewmodels.RegisterViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 
 class RegisterFragment : Fragment() {
 
@@ -82,7 +86,7 @@ class RegisterFragment : Fragment() {
 
         viewModel.isRegistering.observe(viewLifecycleOwner, Observer {
 
-            if(it) {
+            if (it) {
                 binding.registerAccountBtn.isEnabled = false
                 binding.registerAccountBtn.text = resources.getText(R.string.registracija_text)
             } else {
@@ -106,30 +110,51 @@ class RegisterFragment : Fragment() {
             /**
              * Provjera svih unesenih podataka i registracija korisnika
              */
-            if(viewModel.isEmailValid(email)) {
-                if(viewModel.isPasswordValid(password)) {
-                    if(viewModel.isUserNameValid(username)) {
+            if (viewModel.isEmailValid(email)) {
+                if (viewModel.isPasswordValid(password)) {
+                    if (viewModel.isUserNameValid(username)) {
 
                         viewModel.isRegistering.value = true
+
                         viewModel.registerUser(email, password, username)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    val korisnik = hashMapOf("imeKorisnika" to username)
-                                    viewModel.insertUserIntoDatabase(korisnik).addOnCompleteListener {
-                                        if(it.isSuccessful)
-                                            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment())
-                                        else {
-                                            viewModel.isRegistering.value = false
-                                            Toast.makeText(requireContext(), it.exception.toString(), Toast.LENGTH_LONG).show()
-                                        }
+
+                                    var token: String = ""
+
+                                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                                        token = task.result!!
+
+                                        val korisnik = User("", username, "", token)
+
+                                        viewModel.insertUserIntoDatabase(korisnik)
+                                            .addOnCompleteListener {
+                                                if (it.isSuccessful) {
+                                                    findNavController().navigate(
+                                                        RegisterFragmentDirections.actionRegisterFragmentToMainFragment()
+                                                    )
+                                                } else {
+                                                    viewModel.isRegistering.value = false
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        it.exception.toString(),
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
+                                            }
                                     }
                                 } else {
                                     viewModel.isRegistering.value = false
-                                    Toast.makeText(requireContext(), it.exception.toString(), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        requireContext(),
+                                        it.exception.toString(),
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             }
 
-                    } else binding.usernameInputBox.error = "Ime mora biti manje od 20 karaktera, a veće od 4"
+                    } else binding.usernameInputBox.error =
+                        "Ime mora biti manje od 20 karaktera, a veće od 4"
                 } else binding.passwordInputBox.error = "Lozinka mora biti duža od 6 karaktera"
             } else binding.emailInputBox.error = "Neispravan e-mail"
 

@@ -25,6 +25,7 @@ import com.electroniccode.leafy.viewmodels.CreatePitanjeViewModel
 import com.google.android.gms.common.util.IOUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.util.FileUtil
 import com.google.firebase.storage.FirebaseStorage
@@ -48,6 +49,7 @@ class CreatePitanjeFragment : Fragment() {
 
     val database = FirebaseFirestore.getInstance()
     val storage = FirebaseStorage.getInstance()
+    val user by lazy { FirebaseAuth.getInstance().currentUser }
 
     private var _binding: CreatePitanjeFragmentBinding? = null
     val binding get() = _binding!!
@@ -102,7 +104,7 @@ class CreatePitanjeFragment : Fragment() {
 
                 if (viewModel.slikaUri == null) {
 
-                    val pitanje = Pitanje(pitanjeText, opisText, datum = Timestamp.now())
+                    val pitanje = Pitanje(tekstPitanja =  pitanjeText, opis = opisText, datum = Timestamp.now(), idAutora = user?.uid!!)
 
                     database.collection("pitanja").document().set(pitanje)
                         .addOnCompleteListener {
@@ -117,7 +119,7 @@ class CreatePitanjeFragment : Fragment() {
                                     setBackgroundTint(resources.getColor(R.color.darkGreen))
                                 }.show()
 
-                                object : CountDownTimer(3000, 1000) {
+                                object : CountDownTimer(2000, 1000) {
 
                                     override fun onTick(millisUntilFinished: Long) {
                                     }
@@ -162,7 +164,12 @@ class CreatePitanjeFragment : Fragment() {
                                 storageRef.downloadUrl.addOnCompleteListener {
                                     if(it.isSuccessful) {
 
-                                        val pitanje = Pitanje(pitanjeText, opisText, it.result.toString(), Timestamp.now())
+                                        val pitanje = Pitanje(
+                                            tekstPitanja =  pitanjeText,
+                                            opis = opisText,
+                                            slikaPitanja =  it.result.toString(),
+                                            datum = Timestamp.now(),
+                                            idAutora = user?.uid!!)
 
                                         database.collection("pitanja").document().set(pitanje)
                                             .addOnCompleteListener {
@@ -177,7 +184,7 @@ class CreatePitanjeFragment : Fragment() {
                                                         setBackgroundTint(resources.getColor(R.color.darkGreen))
                                                     }.show()
 
-                                                    object : CountDownTimer(3000, 1000) {
+                                                    object : CountDownTimer(2000, 1000) {
 
                                                         override fun onTick(millisUntilFinished: Long) {
                                                         }

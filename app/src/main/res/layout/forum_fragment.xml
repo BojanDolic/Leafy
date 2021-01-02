@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:paddingTop="26dp"
     tools:context=".fragments.ForumFragment">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forum_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/kreiraj_pitanje_fab"
@@ -25,9 +26,12 @@
         app:tint="#fff" />
 
 
-    <androidx.core.widget.ContentLoadingProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading_progress_forum"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

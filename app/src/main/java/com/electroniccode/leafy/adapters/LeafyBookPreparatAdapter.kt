@@ -10,11 +10,13 @@ import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.models.Preparat
 
-class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) : RecyclerView.Adapter<LeafyBookPreparatAdapter.PreparatViewHolder>() {
+class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) :
+    RecyclerView.Adapter<LeafyBookPreparatAdapter.PreparatViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreparatViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.preparat_recyclerview_element, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.preparat_recyclerview_element, parent, false)
         return PreparatViewHolder(view)
     }
 
@@ -23,12 +25,13 @@ class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) : RecyclerView.Ad
         val preparat = preparati.get(position)
 
         holder.nazivPreparata.text = preparat?.imePreparata
+        holder.vrstaPreparata.text = preparat?.tipPreparata
 
 
-
-      Glide.with(holder.itemView.context)
-            .load(preparat?.slika)
-            .into(holder.slikaPreparata)
+        if(preparat?.slika?.isNotEmpty()!!)
+            Glide.with(holder.itemView.context)
+                .load(preparat.slika)
+                .into(holder.slikaPreparata)
 
     }
 
@@ -40,12 +43,13 @@ class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) : RecyclerView.Ad
 
         var slikaPreparata: ImageView
         var nazivPreparata: TextView
+        var vrstaPreparata: TextView
 
         init {
 
             slikaPreparata = itemView.findViewById(R.id.leafy_book_slika_preparata)
             nazivPreparata = itemView.findViewById(R.id.leafy_book_naziv_preparata)
-
+            vrstaPreparata = itemView.findViewById(R.id.leafy_book_vrsta_preparata)
         }
 
 

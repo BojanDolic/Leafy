@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ProfilFragment"
+    android:background="@color/backgroundColor">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profil_user_info_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="9dp"
+            android:translationZ="9dp"
+            app:contentPadding="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageButton
+                    android:id="@+id/profil_options_btn"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@null"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/more_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <ImageView
+                    android:id="@+id/profile_icon"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/profile_icon_placeholder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/profil_ime_korisnika_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ucitavanje_text"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="24sp"
+                    android:maxLines="1"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="6dp"
+                    app:layout_constraintStart_toEndOf="@id/profile_icon"
+                    app:layout_constraintTop_toTopOf="@id/profile_icon"
+                    app:layout_constraintBottom_toTopOf="@id/profil_rank_korisnika_text"
+                    app:layout_constraintEnd_toStartOf="@id/profil_options_btn"
+                    app:layout_constraintVertical_chainStyle="packed"/>
+
+
+                <TextView
+                    android:id="@+id/profil_rank_korisnika_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Rank"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="17sp"
+                    android:maxLines="1"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toEndOf="@id/profile_icon"
+                    app:layout_constraintTop_toBottomOf="@id/profil_ime_korisnika_text"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_icon"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profil_user_stats_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="9dp"
+            android:translationZ="9dp"
+            app:contentPadding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/profil_user_info_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/profil_statistika_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/statistika_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/lightBlue" />
+
+                <TextView
+                    android:id="@+id/profil_statistika_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Statistika"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="22sp"
+                    android:maxLines="1"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="6dp"
+                    app:layout_constraintStart_toEndOf="@id/profil_statistika_icon"
+                    app:layout_constraintTop_toTopOf="@id/profil_statistika_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/profil_statistika_icon"/>
+
+
+                <TextView
+                    android:id="@+id/profil_statistika_odgovora_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Odgovora:"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="19sp"
+                    app:layout_constraintTop_toBottomOf="@id/profil_statistika_icon"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/profil_statistika_odgovora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/lightBlue"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="19sp"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintTop_toTopOf="@id/profil_statistika_odgovora_text"
+                    app:layout_constraintBottom_toBottomOf="@id/profil_statistika_odgovora_text"
+                    app:layout_constraintStart_toEndOf="@id/profil_statistika_odgovora_text" />
+
+
+                <TextView
+                    android:id="@+id/profil_statistika_najboljih_odgovora_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Najboljih odgovora:"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="19sp"
+                    app:layout_constraintTop_toBottomOf="@id/profil_statistika_odgovora_text"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/profil_statistika_najboljih_odgovora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#059F63"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="19sp"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintTop_toTopOf="@id/profil_statistika_najboljih_odgovora_text"
+                    app:layout_constraintBottom_toBottomOf="@id/profil_statistika_najboljih_odgovora_text"
+                    app:layout_constraintStart_toEndOf="@id/profil_statistika_najboljih_odgovora_text" />
+
+
+                <TextView
+                    android:id="@+id/profil_statistika_progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/do_sljedeceg_ranka_text"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="19sp"
+                    app:layout_constraintTop_toBottomOf="@id/profil_statistika_najboljih_odgovora"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/profil_progress_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/profil_statistika_progress_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/profil_statistika_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="19sp"
+                    app:layout_constraintTop_toBottomOf="@id/profil_progress_indicator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!--<com.google.android.material.progressindicator.ProgressIndicator
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/profil_statistika_najboljih_odgovora_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:progress="65"/>-->
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profil_edit_posts_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="9dp"
+            android:translationZ="9dp"
+            app:contentPadding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/profil_user_stats_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/profil_edit_posts_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/uredi_objave_text"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="22sp"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/navigation_icon"
+                    android:rotation="90"
+                    app:tint="@color/mainColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profil_prodajna_mjesta_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="9dp"
+            android:translationZ="9dp"
+            app:contentPadding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/profil_edit_posts_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/profil_prodajna_mjesta_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/prodajna_mjesta_text"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="22sp"
+                    android:maxLines="1" />
+
+
+                <ImageView
+                    android:id="@+id/profil_prodajna_mjesta_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/store_icon"
+                    app:tint="@color/secondaryOn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    <!--
+
+    <View
+                android:id="@+id/profile_card_splitter"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#27050505"
+                app:layout_constraintTop_toBottomOf="@id/profile_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+
+
+            <TextView
+                android:id="@+id/profil_broj_odgovora_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Odgovora"
+                android:fontFamily="@font/opensans_regular"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:layout_marginTop="9dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profile_card_splitter"
+                app:layout_constraintEnd_toStartOf="@id/profil_pitanja_text"
+                app:layout_constraintHorizontal_chainStyle="spread"/>
+
+
+            <TextView
+                android:id="@+id/profil_broj_odgovora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/opensans_extrabold"
+                android:textSize="22sp"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="@color/mainColor"
+                android:layout_marginTop="9dp"
+                app:layout_constraintStart_toStartOf="@id/profil_broj_odgovora_text"
+                app:layout_constraintEnd_toEndOf="@id/profil_broj_odgovora_text"
+                app:layout_constraintTop_toBottomOf="@id/profil_broj_odgovora_text"/>
+
+
+            <TextView
+                android:id="@+id/profil_pitanja_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pitanja"
+                android:fontFamily="@font/opensans_regular"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:layout_marginTop="9dp"
+                app:layout_constraintStart_toEndOf="@id/profil_broj_odgovora_text"
+                app:layout_constraintTop_toBottomOf="@id/profile_card_splitter"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/opensans_extrabold"
+                android:textSize="22sp"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="@color/mainColor"
+                android:layout_marginTop="9dp"
+                app:layout_constraintStart_toStartOf="@id/profil_pitanja_text"
+                app:layout_constraintEnd_toEndOf="@id/profil_pitanja_text"
+                app:layout_constraintTop_toBottomOf="@id/profil_pitanja_text"/>
+
+    -->
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

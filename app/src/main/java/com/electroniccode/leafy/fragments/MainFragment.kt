@@ -43,8 +43,8 @@ class MainFragment : Fragment() {
         }
 
         binding.profilCard.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
+            //FirebaseAuth.getInstance().signOut()
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToProfilFragment())
         }
 
         binding.scanCard.setOnClickListener {

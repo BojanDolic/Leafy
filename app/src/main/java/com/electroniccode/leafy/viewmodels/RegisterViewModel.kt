@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.electroniccode.leafy.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -26,7 +27,7 @@ class RegisterViewModel : ViewModel() {
 
     private fun registerUsingFirebaseAuth(email: String, password: String, username: String) = firebaseAuth.createUserWithEmailAndPassword(email, password)
 
-    fun insertUserIntoDatabase(korisnik: HashMap<String, String>) = db.collection("korisnici").document(firebaseAuth.currentUser?.uid!!).set(korisnik)
+    fun insertUserIntoDatabase(korisnik: User) = db.collection("korisnici").document(firebaseAuth.currentUser?.uid!!).set(korisnik)
 
     fun isEmailValid(email: String) = (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())
 

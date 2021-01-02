@@ -8,11 +8,16 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.FragmentStartScreenBinding
+import com.electroniccode.leafy.util.FirebaseFCMService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.internal.IdTokenListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
 import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import java.lang.Exception
 
 class StartScreenFragment : Fragment() {
@@ -23,7 +28,7 @@ class StartScreenFragment : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
-    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
+    private val database = FirebaseFirestore.getInstance()
 
 
     override fun onCreateView(
@@ -46,7 +51,51 @@ class StartScreenFragment : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        authStateListener = FirebaseAuth.AuthStateListener {
+        val user = firebaseAuth.currentUser
+
+        user?.let {
+
+            it.getIdToken(true).addOnCompleteListener {
+                if (it.isSuccessful) {
+
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+
+                        if (task.isSuccessful) {
+                            val token = task.result
+
+                            database.document("korisnici/${user.uid}").update("token", token)
+                            findNavController().navigate(StartScreenFragmentDirections.actionStartScreenFragmentToMainFragment())
+                        } else {
+                            binding.registerBtn.visibility = View.VISIBLE
+                            binding.loginBtn.visibility = View.VISIBLE
+                        }
+                    }
+
+                } else {
+                    binding.registerBtn.visibility = View.VISIBLE
+                    binding.loginBtn.visibility = View.VISIBLE
+                }
+
+            }
+            /*it.getIdToken(true).addOnCompleteListener {
+                if(it.isSuccessful) {
+                    val token = it.result?.token
+
+                    database.document("korisnici/${user.uid}").update("token", token)
+                    findNavController().navigate(StartScreenFragmentDirections.actionStartScreenFragmentToMainFragment())
+                } else {
+                    binding.registerBtn.visibility = View.VISIBLE
+                    binding.loginBtn.visibility = View.VISIBLE
+                }
+            }*/
+
+
+        } ?: run {
+            binding.registerBtn.visibility = View.VISIBLE
+            binding.loginBtn.visibility = View.VISIBLE
+        }
+
+        /*authStateListener = FirebaseAuth.AuthStateListener {
             if(it.currentUser != null)
                 findNavController().navigate(StartScreenFragmentDirections.actionStartScreenFragmentToMainFragment())
             else {
@@ -55,7 +104,7 @@ class StartScreenFragment : Fragment() {
             }
         }
 
-        firebaseAuth.addAuthStateListener(authStateListener)
+        firebaseAuth.addAuthStateListener(authStateListener)*/
 
 
 
@@ -73,7 +122,7 @@ class StartScreenFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        firebaseAuth.removeAuthStateListener(authStateListener)
+        //firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
 

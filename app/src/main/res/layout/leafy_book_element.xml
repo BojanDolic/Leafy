@@ -23,7 +23,7 @@
             android:fontFamily="@font/opensans_bold"
             android:maxLines="1"
             android:text="@string/leafy_vision_bottom_sheet_title_dummy"
-            android:textSize="21sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/leafy_book_element_desc"
@@ -48,7 +48,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/roundImage20dp"
-            android:layout_marginTop="36dp"/>
+            android:layout_marginTop="36dp"
+            android:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

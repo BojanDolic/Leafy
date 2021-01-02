@@ -1,14 +1,16 @@
 package com.electroniccode.leafy.models
 
 import com.google.firebase.Timestamp
+import java.io.Serializable
 
 data class Pitanje(
+    var idDokumenta: String = "",
     val tekstPitanja: String = "",
     val opis: String = "",
     val slikaPitanja: String = "",
-    @Transient val datum: Timestamp? = null,
-    @Transient val komentari: List<Komentar>? = null
-) {
+    val idAutora: String = "",
+    @Transient val datum: Timestamp? = null
+) : Serializable {
 
     override fun equals(other: Any?): Boolean {
 
@@ -23,8 +25,6 @@ data class Pitanje(
         if(slikaPitanja != other.slikaPitanja)
             return false
         if(datum !== other.datum)
-            return false
-        if(komentari !== other.komentari)
             return false
 
         return true

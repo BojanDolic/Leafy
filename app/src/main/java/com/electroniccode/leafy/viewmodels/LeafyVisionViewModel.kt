@@ -22,7 +22,7 @@ class LeafyVisionViewModel(app: Application) : AndroidViewModel(app) {
     var imageUri: Uri? = null
     var bolest: Bolest? = null
 
-    val context = app.applicationContext
+    val context = getApplication<Application>().applicationContext
 
     private var kukuruzModel: AutoMLImageLabelerLocalModel
     private var krompirModel: AutoMLImageLabelerLocalModel
@@ -43,11 +43,11 @@ class LeafyVisionViewModel(app: Application) : AndroidViewModel(app) {
             .build()
 
         val kukuruzLabelerOptions = AutoMLImageLabelerOptions.Builder(kukuruzModel)
-            .setConfidenceThreshold(0.5f)
+            .setConfidenceThreshold(0f)
             .build()
 
         val krompirLabelerOptions = AutoMLImageLabelerOptions.Builder(krompirModel)
-            .setConfidenceThreshold(0.5f)
+            .setConfidenceThreshold(0f)
             .build()
 
         kukuruzLabeler = ImageLabeling.getClient(kukuruzLabelerOptions)
@@ -66,5 +66,9 @@ class LeafyVisionViewModel(app: Application) : AndroidViewModel(app) {
         else return krompirLabeler.process(image)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+
+    }
 
 }

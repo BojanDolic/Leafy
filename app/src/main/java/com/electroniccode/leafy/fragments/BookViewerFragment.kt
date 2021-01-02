@@ -16,15 +16,14 @@ import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.adapters.LeafyBookPreparatAdapter
 import com.electroniccode.leafy.databinding.BookViewerFragmentBinding
+import com.electroniccode.leafy.getDocuments
 import com.electroniccode.leafy.models.Preparat
 import com.electroniccode.leafy.viewmodels.BookViewerViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.*
+import java.lang.StringBuilder
 
 class BookViewerFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = BookViewerFragment()
-    }
 
     private lateinit var viewModel: BookViewerViewModel
 
@@ -68,25 +67,74 @@ class BookViewerFragment : Fragment() {
                 val bookElement = layoutInflater.inflate(R.layout.leafy_book_element, binding.root, false)
 
                 bookElement.findViewById<TextView>(R.id.leafy_book_element_title).text = bolest.naslovi.get(index)
-                bookElement.findViewById<TextView>(R.id.leafy_book_element_desc).text = bolest.opis?.get(index)
+                val opisElement = bookElement.findViewById<TextView>(R.id.leafy_book_element_desc)
+
+                val stringBuilder = StringBuilder("")
+                val stringovi: List<String> = bolest.opis?.get(index)?.split("\\n")!!
+
+
+
+                if(stringovi.size > 0) {
+                    for (string in stringovi) {
+                        stringBuilder.append("\n" + string.trim())
+                        opisElement.text = stringBuilder
+                    }
+                } else {
+                    opisElement.text = bolest.opis.get(index)
+                }
+
+                //bookElement.findViewById<TextView>(R.id.leafy_book_element_desc).text = bolest.opis?.get(index)
 
                 val slika = bookElement.findViewById<ImageView>(R.id.leafy_book_element_image)
 
-                Glide.with(requireContext())
-                    .load(bolest.slikaBolesti)
-                    .into(slika)
+                bolest.slike?.let {
+                    Log.d("TAG", "onViewCreated: ${it.get(index)}")
+                    if(index <= it.size) {
+                        if (!it[index].isEmpty()) {
+                            Glide.with(requireContext())
+                                .load(it.get(index))
+                                .into(slika)
+                        } else slika.visibility = View.GONE
+
+                    } else slika.visibility = View.GONE
+
+                } ?: run { slika.visibility = View.GONE }
 
                 binding.bookScrollContainer.addView(bookElement)
 
             }
 
             if(bolest.preparati != null) {
+                GlobalScope.launch {
 
-                Log.d("TAG", "onViewCreated: Postoji preparat")
+                    val preparati = database.getDocuments(bolest.preparati, "preparati")
 
-                database.document(bolest.preparati.get(0)).get().addOnSuccessListener {
+                    preparati.let {
 
-                    Log.d("TAG", "onViewCreated: Uspješno preuzet")
+                        if(it.size > 0) {
+
+                            CoroutineScope(Dispatchers.Main).launch {
+                                val preparatiElement = layoutInflater.inflate(R.layout.leafy_book_preparati_element, binding.root, false)
+                                val preparatRecycler = preparatiElement.findViewById<RecyclerView>(R.id.leafy_book_preparati_recycler)
+
+                                val preparatiAdapter = LeafyBookPreparatAdapter(it)
+
+                                preparatRecycler.adapter = preparatiAdapter
+                                preparatRecycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+                                binding.bookScrollContainer.addView(preparatiElement)
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+                //Log.d("TAG", "onViewCreated: ${preparati}")
+
+                /*database.document(bolest.preparati.get(0)).get().addOnSuccessListener {
 
                     val preparat = it.toObject(Preparat::class.java)
 
@@ -101,18 +149,13 @@ class BookViewerFragment : Fragment() {
 
                     binding.bookScrollContainer.addView(preparatiElement)
 
-                }
-
-
-
+                }*/
 
 
 
             }
 
         }
-
-
 
 
     }

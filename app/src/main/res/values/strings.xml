@@ -1,12 +1,15 @@
 <resources>
+
     <string name="app_name">Leafy</string>
+
+    <string name="mapbox_access_token">pk.eyJ1IjoiZWxlY3Ryb25pY2NvZGUiLCJhIjoiY2tqZG8yYm94MmM1aTJ3cnVsaHIyMWhyNSJ9.CEE6JuJApgJ_emqEDD-pUQ</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="prijavi_se_text">PRIJAVI SE</string>
     <string name="registruj_se_text">REGISTRUJ SE</string>
     <string name="registracija_text">Registracija...</string>
 
-    <string name="register_email_error"></string>
     <string name="prijava_text">PRIJAVA</string>
     <string name="prodaj_zitarice_desc">Prodajte svoje žitarice okolini</string>
     <string name="prodaj_zitarice_text">Prodaj žitarice</string>
@@ -117,7 +120,20 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="pitanje_no_comments_text">Nema odgovora na ovo pitanje.\n Budite prvi koji će odgovoriti.</string>
+    <string name="ucitavanje_text">Učitavanje...</string>
+    <string name="odjavi_se_text">Odjavi se</string>
+    <string name="podesavanja_profila_text">Podešavanja profila</string>
+    <string name="sacuvaj_izmjene_text">Sačuvaj izmjene</string>
+    <string name="do_sljedeceg_ranka_text">Do sljedećeg ranka:</string>
+    <string name="progress_placeholder_text">%1$d%%</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prodajna_mjesta_text">Prodajna mjesta</string>
+    <string name="uredi_objave_text">Uredi objave</string>
+    <string name="dodajte_prodajno_mjesto_text">Dodajte prodajno mjesto</string>
+    <string name="no_mjesto_warning_description">Trenutno nemate ni jedno prodajno mjesto. Dodajte prodajno mjesto da bi mogli prodavati žitarice.</string>
+    <string name="upozorenje_text">Upozorenje</string>
 
 
 </resources>
