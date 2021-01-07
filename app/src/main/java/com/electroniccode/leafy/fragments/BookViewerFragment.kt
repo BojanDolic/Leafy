@@ -88,12 +88,13 @@ class BookViewerFragment : Fragment() {
                 val slika = bookElement.findViewById<ImageView>(R.id.leafy_book_element_image)
 
                 bolest.slike?.let {
-                    Log.d("TAG", "onViewCreated: ${it.get(index)}")
-                    if(index <= it.size) {
+                    if(index < it.size) {
                         if (!it[index].isEmpty()) {
+
                             Glide.with(requireContext())
                                 .load(it.get(index))
                                 .into(slika)
+
                         } else slika.visibility = View.GONE
 
                     } else slika.visibility = View.GONE

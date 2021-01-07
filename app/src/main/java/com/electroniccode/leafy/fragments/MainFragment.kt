@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.MainFragmentBinding
@@ -49,6 +50,17 @@ class MainFragment : Fragment() {
 
         binding.scanCard.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToSelectPlantFragment())
+        }
+
+        binding.prodajZitariceCard.setOnClickListener {
+
+            val extras = FragmentNavigator.Extras.Builder()
+            extras.addSharedElement(binding.prodajZitariceIcon, "sellCropsImage")
+            extras.addSharedElement(binding.prodajZitariceCard, "sellCropsCard")
+            extras.addSharedElement(binding.prodajZitariceDescription, "sellCropsText")
+
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToProdajZitariceFragment(), extras.build())
+
         }
 
     }

@@ -9,10 +9,11 @@
     <string name="prijavi_se_text">PRIJAVI SE</string>
     <string name="registruj_se_text">REGISTRUJ SE</string>
     <string name="registracija_text">Registracija...</string>
+    <string name="cuvanje_text">Čuvanje...</string>
 
     <string name="prijava_text">PRIJAVA</string>
-    <string name="prodaj_zitarice_desc">Prodajte svoje žitarice okolini</string>
-    <string name="prodaj_zitarice_text">Prodaj žitarice</string>
+    <string name="prodaj_zitarice_desc">Prodajte svoje proizvode okolini</string>
+    <string name="prodaj_zitarice_text">Leafy trade</string>
     <string name="leafy_book_title">Leafy book</string>
     <string name="vrijeme_text">Vrijeme</string>
     <string name="vrijeme_desc">Pogledajte vremensku prognozu</string>
@@ -120,6 +121,8 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="leafy_trade_euro_per_kg_text">\u20AC/kg</string>
+
     <string name="pitanje_no_comments_text">Nema odgovora na ovo pitanje.\n Budite prvi koji će odgovoriti.</string>
     <string name="ucitavanje_text">Učitavanje...</string>
     <string name="odjavi_se_text">Odjavi se</string>
@@ -134,6 +137,13 @@
     <string name="dodajte_prodajno_mjesto_text">Dodajte prodajno mjesto</string>
     <string name="no_mjesto_warning_description">Trenutno nemate ni jedno prodajno mjesto. Dodajte prodajno mjesto da bi mogli prodavati žitarice.</string>
     <string name="upozorenje_text">Upozorenje</string>
-
+    <string name="leafy_trade_desc">Poljoprivrednik ste i proizvodite žitarice, voće i povrće ?\nUz pomoć leafy trade-a prodajte svoje proizvode ljudima u okolini.
+        \n\nLeafy trade funkcioniše na način da se Vaš objavljeni oglas prikazuje ljudima u krugu od 10 kilometara.
+        Tokom kreiranja proizvoda dužni ste unijeti broj mobilnog telefona pomoću kojeg vas zainteresovani kupci mogu kontaktirati nakon objave oglasa.</string>
+    <string name="leafy_trade_prodajno_mjesto_desc">Prodajno mjesto je lokacija koju vi kreirate na mapi kako bi aplikacija mogla odrediti udaljenost između prodavača i kupca</string>
+    <string name="leafy_trade_proizvod_desc">Pri prodaji proizvoda je potrebno navesti koji proizvod tačno prodajete. Na taj način potencijalni kupci mogu lakše doći do vašeg oglasa.</string>
+    <string name="leafy_trade_slika_desc">Slika proizvoda je bitan dio oglasa. Pomoću slike potencijalni kupci prepoznaju kvalitet proizvoda i iz tog razloga je bitno da slika koju postavite jasno prikazuje Vaš proizvod.</string>
+    <string name="leafy_trade_opis_desc">Vaš oglas pored slike treba da sadrži naslov i opis. Potrudite se da opis proizvoda bude kratak i jasan.</string>
+    <string name="leafy_trade_cijena_desc">Cijena proizvoda je jedna od najvažnijih stvari pri kreiranju proizvoda. Vrijednost koju unesete u polje ispod će biti prikazana kao cijena Vašeg proizvoda svim korisnicima.\nCijenu unesite u <b>evrima</b></string>
 
 </resources>

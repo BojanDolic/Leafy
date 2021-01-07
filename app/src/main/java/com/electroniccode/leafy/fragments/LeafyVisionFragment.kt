@@ -23,6 +23,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.electroniccode.leafy.MainActivity
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.LeafyVisionFragmentBinding
 import com.electroniccode.leafy.models.Bolest
@@ -33,7 +34,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 
-class LeafyVisionFragment : Fragment() {
+class LeafyVisionFragment : Fragment(), MainActivity.OnBackPressedListener {
 
     companion object {
         fun newInstance() = LeafyVisionFragment()
@@ -51,6 +52,7 @@ class LeafyVisionFragment : Fragment() {
 
     private var bolest: Bolest? = null
 
+    private var activity: MainActivity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +60,8 @@ class LeafyVisionFragment : Fragment() {
     ): View? {
         _binding = LeafyVisionFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(LeafyVisionViewModel::class.java)
+        activity = requireActivity() as MainActivity
+        activity?.setOnBackPressedListener(this)
         return binding.root
     }
 
@@ -211,10 +215,21 @@ class LeafyVisionFragment : Fragment() {
     }
 
 
+    override fun onBackPressedInFragment() {
+        if(bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        } else findNavController().navigateUp()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        activity?.setOnBackPressedListener(null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity = null
     }
 
 }

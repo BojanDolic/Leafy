@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".fragments.ProdajZitariceFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/sellCropToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/leafy_trade_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:transitionName="sellCropsCard"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/leafy_trade_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/prodaj_zitarice_icon"
+                android:transitionName="sellCropsImage"
+                app:layout_constraintBottom_toTopOf="@id/leafy_trade_desc_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/yellow" />
+
+
+            <TextView
+                android:id="@+id/leafy_trade_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_light"
+                android:text="@string/leafy_trade_desc"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:transitionName="sellCropsText"
+                app:layout_constraintBottom_toTopOf="@id/leafy_trade_startbtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leafy_trade_icon" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/leafy_trade_startbtn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Započni prodaju"
+                app:icon="@drawable/korpica_icon"
+                app:iconPadding="12dp"
+                app:iconSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leafy_trade_desc_text" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!--     <com.google.android.material.card.MaterialCardView
+             android:id="@+id/leafy_trade_mjesto_card"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+             android:layout_marginTop="12dp"
+             android:layout_marginEnd="16dp"
+             android:transitionName="sellCropsCard"
+             android:translationZ="8dp"
+             app:cardCornerRadius="12dp"
+             app:cardElevation="8dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@id/leafy_trade_card">
+
+             <androidx.constraintlayout.widget.ConstraintLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:padding="9dp">
+
+                 <TextView
+                     android:id="@+id/leafy_trade_prodajno_mjesto_title"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:fontFamily="@font/opensans_semibold"
+                     android:maxLines="1"
+                     android:text="Prodajno mjesto"
+                     android:textSize="18sp"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent" />
+
+
+                 <com.google.android.material.textfield.TextInputLayout
+                     android:id="@+id/leafy_trade_prodajno_mjesto_inputlayout"
+                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="3dp"
+                     android:clickable="true"
+                     android:hint="Izaberite prodajno mjesto"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@id/leafy_trade_prodajno_mjesto_title">
+
+                     <com.google.android.material.textfield.TextInputEditText
+                         android:id="@+id/leafy_trade_prodajno_mjesto_input"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:focusable="false"
+                         android:inputType="none" />
+
+                 </com.google.android.material.textfield.TextInputLayout>
+
+             </androidx.constraintlayout.widget.ConstraintLayout>
+
+         </com.google.android.material.card.MaterialCardView>
+
+         <com.google.android.material.card.MaterialCardView
+             android:id="@+id/leafy_trade_proizvod_type_card"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+             android:layout_marginTop="12dp"
+             android:layout_marginEnd="16dp"
+             android:layout_marginBottom="32dp"
+             android:transitionName="sellCropsCard"
+             android:translationZ="8dp"
+             app:cardCornerRadius="12dp"
+             app:cardElevation="8dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@id/leafy_trade_mjesto_card">
+
+             <androidx.constraintlayout.widget.ConstraintLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:padding="9dp">
+
+                 <com.google.android.material.textfield.TextInputLayout
+                     android:id="@+id/leafy_trade_proizvodi_dropdown"
+                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:hint="Izaberite proizvod"
+                     app:boxStrokeWidth="1dp"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent">
+
+                     <AutoCompleteTextView
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:inputType="none" />
+
+                 </com.google.android.material.textfield.TextInputLayout>
+
+             </androidx.constraintlayout.widget.ConstraintLayout>
+
+         </com.google.android.material.card.MaterialCardView> -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

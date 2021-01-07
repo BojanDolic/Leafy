@@ -1,9 +1,11 @@
 package com.electroniccode.leafy.models
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
 import java.io.Serializable
 
 data class Pitanje(
+    @Exclude
     var idDokumenta: String = "",
     val tekstPitanja: String = "",
     val opis: String = "",

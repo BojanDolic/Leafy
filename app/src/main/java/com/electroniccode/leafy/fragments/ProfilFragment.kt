@@ -18,6 +18,8 @@ import com.electroniccode.leafy.util.UtilFunctions
 import com.electroniccode.leafy.viewmodels.ProfilViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
 class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
@@ -35,14 +37,14 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private val binding get() = _binding!!
 
-    lateinit var listenerRegistration: ListenerRegistration
+    var listenerRegistration: ListenerRegistration? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = ProfilFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(ProfilViewModel::class.java)
+        _binding = ProfilFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,41 +52,56 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.user.let {
-            user?.let {
+        val userListener = object : EventListener<DocumentSnapshot> {
 
-                database.document("korisnici/${it.uid}").get().addOnCompleteListener {
+            override fun onEvent(
+                value: DocumentSnapshot?,
+                error: FirebaseFirestoreException?
+            ) {
 
-                    if(it.isSuccessful) {
+                value?.let {
+                    if (it.exists()) {
 
-                        viewModel.user = it.result?.toObject(User::class.java)
-
+                        viewModel.user = it.toObject(User::class.java)
                         updateUserInfo(viewModel.user)
+
                     }
+
                 }
 
-                val userListener = object : EventListener<DocumentSnapshot> {
+            }
+        }
 
-                    override fun onEvent(
-                        value: DocumentSnapshot?,
-                        error: FirebaseFirestoreException?
-                    ) {
 
-                        value?.let {
-                            if(it.exists()) {
+        viewModel.user.let {
+            user?.let { user ->
 
+                GlobalScope.launch {
+
+                    try {
+                        val userResult = database.document("korisnici/${user.uid}").get().await()
+
+                        userResult?.let {
+                            if (it.exists()) {
                                 viewModel.user = it.toObject(User::class.java)
-                                updateUserInfo(viewModel.user)
 
+                                withContext(Dispatchers.Main) {
+                                    updateUserInfo(viewModel.user)
+                                }
                             }
-
                         }
 
-                    }
-                }
+                        // Realtime update
+                        listenerRegistration =
+                            database.document("korisnici/${user.uid}")
+                                .addSnapshotListener(userListener)
 
-                // Realtime update
-                listenerRegistration = database.document("korisnici/${it.uid}").addSnapshotListener(userListener)
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+
+                }
 
             }
         } ?: run { updateUserInfo(viewModel.user) }
@@ -110,7 +127,7 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
 
-        when(item?.itemId) {
+        when (item?.itemId) {
 
             R.id.profil_menu_logout -> {
                 auth.signOut()
@@ -128,8 +145,9 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
         popupMenu = PopupMenu(
             requireContext(),
-            binding.profilOptionsBtn).apply {
-                setOnMenuItemClickListener(this@ProfilFragment)
+            binding.profilOptionsBtn
+        ).apply {
+            setOnMenuItemClickListener(this@ProfilFragment)
         }
 
         val inflater = popupMenu?.menuInflater
@@ -149,7 +167,8 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
             val progress = UtilFunctions.getPercentageToNextRank(it.najboljihOdgovora)
 
-            binding.profilStatistikaProgress.text = String.format(resources.getString(R.string.progress_placeholder_text), progress)
+            binding.profilStatistikaProgress.text =
+                String.format(resources.getString(R.string.progress_placeholder_text), progress)
             binding.profilProgressIndicator.progress = progress
 
             Glide.with(requireContext())
@@ -162,11 +181,10 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     }
 
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        listenerRegistration.remove()
+        listenerRegistration?.remove()
     }
 
 }
