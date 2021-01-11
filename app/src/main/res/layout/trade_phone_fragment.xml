@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.TradeProizvodFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/sellCropToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/trade_phone_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:transitionName="sellCropsCard"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sellCropToolbar"
+        app:layout_constraintBottom_toTopOf="@id/trade_phone_input_card"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/trade_phone_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/phone_number_icon"
+                android:transitionName="sellCropsImage"
+                app:layout_constraintBottom_toTopOf="@id/trade_phone_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/trade_phone_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Broj telefona"
+                android:textAlignment="center"
+                android:textSize="19sp"
+                android:layout_marginTop="12dp"
+                android:transitionName="sellCropsText"
+                app:layout_constraintBottom_toTopOf="@id/trade_phone_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trade_phone_icon" />
+
+
+            <TextView
+                android:id="@+id/trade_phone_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_light"
+                android:text="@string/leafy_trade_phone_desc"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:transitionName="sellCropsText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trade_phone_title" />
+
+
+
+
+
+            <com.google.android.material.button.MaterialButton
+                 android:id="@+id/trade_phone_koristenje_btn"
+                 style="@style/Widget.MaterialComponents.Button.TextButton"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="12dp"
+                 android:fontFamily="@font/opensans_bold"
+                 android:text="Korištenje broja"
+                 app:iconPadding="12dp"
+                 app:iconSize="24dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@id/trade_phone_desc" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/trade_phone_input_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:transitionName="sellCropsCard"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trade_phone_card">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="9dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/trade_phone_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Unesite broj telefona">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/trade_phone_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/trade_kreiraj_proizvod_btn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:text="Kreiraj proizvod"
+        app:icon="@drawable/next_icon"
+        app:strokeColor="@color/mainColor"
+        app:iconPadding="18dp"
+        app:iconGravity="end"
+        app:iconSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trade_phone_input_card"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

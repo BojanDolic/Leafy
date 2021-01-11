@@ -20,7 +20,7 @@
     <string name="profil_text">Profil</string>
     <string name="profil_desc">Uradite izmjene oko profila i objava</string>
     <string name="leafy_book_desc">Informacije o biljkama i herbicidima</string>
-    <string name="kupi_zitarice_desc">Pronađite žitarice u vašem okruženju</string>
+    <string name="kupi_zitarice_desc">Pronađite proizvode u vašoj okolini.</string>
     <string name="forum_desc">Imate problem ? Zatražite pomoć</string>
     <string name="forum_text">Forum</string>
     <string name="leafy_vision_desc">Otkrijte bolest uz pomoć umjetne inteligencije</string>
@@ -130,8 +130,8 @@
     <string name="sacuvaj_izmjene_text">Sačuvaj izmjene</string>
     <string name="do_sljedeceg_ranka_text">Do sljedećeg ranka:</string>
     <string name="progress_placeholder_text">%1$d%%</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="evro_placeholder_text">%.2f \u20AC</string>
+
     <string name="prodajna_mjesta_text">Prodajna mjesta</string>
     <string name="uredi_objave_text">Uredi objave</string>
     <string name="dodajte_prodajno_mjesto_text">Dodajte prodajno mjesto</string>
@@ -145,5 +145,18 @@
     <string name="leafy_trade_slika_desc">Slika proizvoda je bitan dio oglasa. Pomoću slike potencijalni kupci prepoznaju kvalitet proizvoda i iz tog razloga je bitno da slika koju postavite jasno prikazuje Vaš proizvod.</string>
     <string name="leafy_trade_opis_desc">Vaš oglas pored slike treba da sadrži naslov i opis. Potrudite se da opis proizvoda bude kratak i jasan.</string>
     <string name="leafy_trade_cijena_desc">Cijena proizvoda je jedna od najvažnijih stvari pri kreiranju proizvoda. Vrijednost koju unesete u polje ispod će biti prikazana kao cijena Vašeg proizvoda svim korisnicima.\nCijenu unesite u <b>evrima</b></string>
+    <string name="leafy_trade_phone_desc">Došli ste do posljednjeg koraka pri kreiranju proizvoda.\n\nU ovom koraku trebate unijeti Vaš telefonski broj kako bi Vas zainteresovani kupci mogli kontaktirati i dogovoriti prodaju.</string>
+
+
+    <string name="trade_phone_koristenje_dialog_title">Kako se koristi Vaš broj telefona ?</string>
+    <string name="trade_phone_koristenje_dialog_text">Unošenjem broja telefona omogućujete drugim korisnicima, potencijalnim kupcima, da vide Vaš broj telefona kao i da stupe sa vama u kontakt. Broj telefona isključivo se koristi u te svrhe i neće biti zloupotrijebljen.\n\nAko prihvatate ovu upotrebu Vašeg telefonskog broja, pritisnite Prihvatam.</string>
+
+    <string name="leafy_buy_select_proizvod_desc">Leafy buy je sistem koji na osnovu Vaše lokacije i odabranog proizvoda pronalazi prodavače u krugu od 10 kilometara od Vaše trenutne lokacije.\nUkoliko ste u potrazi za proizvodima u Vašoj okolini, leafy buy će Vam pomoći u pronalaženju.</string>
+    <string name="pretrazi_text">Pretraži</string>
+    <string name="pretrazivanje_text">Pretraživanje...</string>
+    <string name="lokacija_permission_rationale">Aplikacija Leafy zahtijeva Vašu lokaciju kako bi mogla odrediti Vašu trenutnu lokaciju pri pretraživanju proizvoda u Vašoj blizini.\nAko odbijete korištenje Vaše lokacije neke od funkcija aplikacije neće raditi.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

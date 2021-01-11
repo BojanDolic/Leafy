@@ -108,7 +108,7 @@ class BookViewerFragment : Fragment() {
             if(bolest.preparati != null) {
                 GlobalScope.launch {
 
-                    val preparati = database.getDocuments(bolest.preparati, "preparati")
+                    val preparati = database.getDocuments<Preparat>(bolest.preparati, "preparati")
 
                     preparati.let {
 

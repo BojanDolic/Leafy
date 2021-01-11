@@ -2,6 +2,7 @@ package com.electroniccode.leafy.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +26,7 @@ class TradeProizvodFragment : Fragment() {
 
     private lateinit var dropdown: AutoCompleteTextView
 
-    private val viewModel: LeafyTradeViewModel by navGraphViewModels(R.id.navigation_graph)
+    private val viewModel: LeafyTradeViewModel by navGraphViewModels(R.id.create_proizvod_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,12 @@ class TradeProizvodFragment : Fragment() {
         _binding = TradeProizvodFragmentBinding.inflate(inflater, container, false)
         dropdown = (binding.tradeProizvodiDropdown.editText as AutoCompleteTextView)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val transition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = transition
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

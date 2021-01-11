@@ -1,8 +1,12 @@
 package com.electroniccode.leafy.util
 
+import android.Manifest
+import androidx.datastore.preferences.core.preferencesKey
 import java.util.regex.Pattern
 
 object Constants {
+
+    val locationPerm = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
     const val PLANT_TYPE_CORN = 1
     const val PLANT_TYPE_POTATO = 2
@@ -11,6 +15,7 @@ object Constants {
 
     const val TIP_BOLEST = 1
     const val TIP_OSTALO = 2
+
 
     val proizvodi = arrayOf(
         "Kukuruz",
@@ -30,5 +35,12 @@ object Constants {
     }
 
     const val specialChars = "[!@#\$%&*()_+=|<>?{}\\\\[\\\\]~-]"
+
+    const val DATASTORE_NAME = "phonePrivacyStore"
+    val DATASTORE_PHONE_KEY = preferencesKey<Boolean>("phoneKey")
+
+    const val PHONE_ACCEPTED = 1
+    const val PHONE_DECLINED = 0
+
 
 }

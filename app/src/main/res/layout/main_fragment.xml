@@ -217,7 +217,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="9dp"
                     android:fontFamily="@font/nunito_bold"
-                    android:text="Kupi žitarice"
+                    android:text="Leafy buy"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

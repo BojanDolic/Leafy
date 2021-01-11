@@ -38,7 +38,7 @@ class TradeMjestoFragment : Fragment() {
     private val noItemsArray = arrayOf("Dodajte prodajno mjesto")
     private val loadingItemsArray = arrayOf("Učitavanje...")
 
-    private val viewModel: LeafyTradeViewModel by navGraphViewModels(R.id.navigation_graph)
+    private val viewModel: LeafyTradeViewModel by navGraphViewModels(R.id.create_proizvod_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -2,6 +2,7 @@ package com.electroniccode.leafy.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,7 +24,7 @@ class TradeSlikaFragment : Fragment() {
     private var _binding: TradeSlikaFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by navGraphViewModels<LeafyTradeViewModel>(R.id.navigation_graph)
+    private val viewModel by navGraphViewModels<LeafyTradeViewModel>(R.id.create_proizvod_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,12 @@ class TradeSlikaFragment : Fragment() {
     ): View? {
         _binding = TradeSlikaFragmentBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val transition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = transition
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

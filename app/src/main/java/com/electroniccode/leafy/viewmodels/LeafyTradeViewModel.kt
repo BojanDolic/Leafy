@@ -1,16 +1,27 @@
 package com.electroniccode.leafy.viewmodels
 
+import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.telephony.PhoneNumberUtils
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.Serializer
+import androidx.datastore.createDataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.createDataStore
+import androidx.lifecycle.*
+import com.electroniccode.leafy.datastore.DataStoreHelper
 import com.electroniccode.leafy.models.Mjesto
+import com.electroniccode.leafy.models.Proizvod
 import com.electroniccode.leafy.util.Constants
 import com.electroniccode.leafy.util.UtilFunctions
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class LeafyTradeViewModel : ViewModel() {
+class LeafyTradeViewModel(app: Application) : AndroidViewModel(app) {
+
+    val context = getApplication<Application>().applicationContext
 
     val izabranoMjesto: MutableLiveData<Mjesto?> = MutableLiveData(null)
 
@@ -23,6 +34,27 @@ class LeafyTradeViewModel : ViewModel() {
 
     var cijenaProizvoda: Float = .0f
 
+    var brojTelefona: String = ""
+
+    val dataStore = DataStoreHelper(context)
+
+
+    fun kreirajProizvod(user: FirebaseUser): Proizvod {
+        return Proizvod(
+            user.uid,
+            naslovProizvoda = naslovProizvoda,
+            opisProizvoda = opisProizvoda,
+            cijenaProizvoda = cijenaProizvoda,
+            brojTelefona = brojTelefona,
+            mjestoLat = izabranoMjesto.value?.lat.toString(),
+            mjestoLng = izabranoMjesto.value?.lng.toString(),
+            tipProizvoda = izabranProizvod.value!!
+        )
+    }
+
+    fun isBrojTelefonaValid(): Boolean {
+        return PhoneNumberUtils.isGlobalPhoneNumber(brojTelefona)
+    }
 
     fun setCijena(cijena: Float) {
         var cijenaTemp = BigDecimal(cijena.toString())
@@ -41,5 +73,10 @@ class LeafyTradeViewModel : ViewModel() {
     fun isOpisProizvodaValid(): Boolean {
         return (opisProizvoda.length > 50 && !UtilFunctions.containsSpecialChars(naslovProizvoda))
     }
+
+    fun isPhoneUsageAccepted(): LiveData<Boolean> {
+        return dataStore.isPhoneUsageAccepted().asLiveData()
+    }
+
 
 }

@@ -73,6 +73,13 @@
                 android:name="enterType"
                 android:defaultValue="0" />
         </action>
+        <action
+            android:id="@+id/action_mainFragment_to_leafyBuyFragment"
+            app:destination="@id/leafyBuyFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -244,73 +251,127 @@
         tools:layout="@layout/prodaj_zitarice_fragment" >
         <action
             android:id="@+id/action_prodajZitariceFragment_to_tradeMjestoFragment"
-            app:destination="@id/tradeMjestoFragment"
+            app:destination="@id/create_proizvod_graph"
             app:launchSingleTop="true"
             app:popUpTo="@id/prodajZitariceFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/tradeMjestoFragment"
-        android:name="com.electroniccode.leafy.fragments.TradeMjestoFragment"
-        android:label="Prodajno mjesto"
-        tools:layout="@layout/trade_mjesto_fragment" >
+    <navigation android:id="@+id/create_proizvod_graph"
+        app:startDestination="@id/tradeMjestoFragment">
+
+        <fragment
+            android:id="@+id/tradeMjestoFragment"
+            android:name="com.electroniccode.leafy.fragments.TradeMjestoFragment"
+            android:label="Prodajno mjesto"
+            tools:layout="@layout/trade_mjesto_fragment">
+            <action
+                android:id="@+id/action_tradeMjestoFragment_to_createProdajnoMjestoFragment"
+                app:destination="@id/createProdajnoMjestoFragment"
+                app:launchSingleTop="true"
+                app:popExitAnim="@android:anim/fade_out"
+                app:popUpTo="@id/tradeMjestoFragment" />
+            <action
+                android:id="@+id/action_tradeMjestoFragment_to_tradeProizvodFragment"
+                app:destination="@id/tradeProizvodFragment"
+                app:launchSingleTop="true"
+                app:popExitAnim="@android:anim/fade_out"
+                app:popUpTo="@id/tradeMjestoFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/tradeProizvodFragment"
+            android:name="com.electroniccode.leafy.fragments.TradeProizvodFragment"
+            android:label="Proizvod"
+            tools:layout="@layout/trade_proizvod_fragment">
+            <action
+                android:id="@+id/action_tradeProizvodFragment_to_tradeSlikaFragment"
+                app:destination="@id/tradeSlikaFragment"
+                app:launchSingleTop="true"
+                app:popExitAnim="@android:anim/fade_out"
+                app:popUpTo="@id/tradeProizvodFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/tradeSlikaFragment"
+            android:name="com.electroniccode.leafy.fragments.TradeSlikaFragment"
+            android:label="Slika proizvoda"
+            tools:layout="@layout/trade_slika_fragment">
+            <action
+                android:id="@+id/action_tradeSlikaFragment_to_tradeOpisFragment"
+                app:destination="@id/tradeOpisFragment"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@android:anim/fade_in"
+                app:popExitAnim="@android:anim/fade_out"
+                app:popUpTo="@id/tradeSlikaFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/tradeOpisFragment"
+            android:name="com.electroniccode.leafy.fragments.TradeOpisFragment"
+            android:label="Opis proizvoda"
+            tools:layout="@layout/trade_opis_fragment">
+            <action
+                android:id="@+id/action_tradeOpisFragment_to_tradeCijenaFragment"
+                app:destination="@id/tradeCijenaFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/tradeOpisFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/tradeCijenaFragment"
+            android:name="com.electroniccode.leafy.fragments.TradeCijenaFragment"
+            android:label="Cijena proizvoda"
+            tools:layout="@layout/trade_cijena_fragment">
+            <action
+                android:id="@+id/action_tradeCijenaFragment_to_tradePhoneFragment"
+                app:destination="@id/tradePhoneFragment"
+                app:launchSingleTop="true"
+                app:popExitAnim="@android:anim/fade_out"
+                app:popUpTo="@id/tradeCijenaFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/tradePhoneFragment"
+            android:name="com.electroniccode.leafy.fragments.TradePhoneFragment"
+            android:label="Broj telefona" />
         <action
-            android:id="@+id/action_tradeMjestoFragment_to_createProdajnoMjestoFragment"
-            app:destination="@id/createProdajnoMjestoFragment"
-            app:launchSingleTop="true"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/tradeMjestoFragment" />
-        <action
-            android:id="@+id/action_tradeMjestoFragment_to_tradeProizvodFragment"
-            app:destination="@id/tradeProizvodFragment"
-            app:launchSingleTop="true"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/tradeMjestoFragment" />
-    </fragment>
+            android:id="@+id/action_global_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </navigation>
 
     <fragment
-        android:id="@+id/tradeProizvodFragment"
-        android:name="com.electroniccode.leafy.fragments.TradeProizvodFragment"
-        android:label="Proizvod"
-        tools:layout="@layout/trade_proizvod_fragment" >
+        android:id="@+id/leafyBuyFragment"
+        android:name="com.electroniccode.leafy.fragments.LeafyBuyFragment"
+        android:label="Leafy buy"
+        tools:layout="@layout/leafy_buy_fragment">
         <action
-            android:id="@+id/action_tradeProizvodFragment_to_tradeSlikaFragment"
-            app:destination="@id/tradeSlikaFragment"
+            android:id="@+id/action_leafyBuyFragment_to_leafyBuyProizvodiFragment"
+            app:destination="@id/leafyBuyProizvodiFragment"
+            app:enterAnim="@android:anim/slide_in_left"
             app:launchSingleTop="true"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/tradeProizvodFragment" />
+            app:popUpTo="@id/leafyBuyFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/tradeSlikaFragment"
-        android:name="com.electroniccode.leafy.fragments.TradeSlikaFragment"
-        android:label="Slika proizvoda"
-        tools:layout="@layout/trade_slika_fragment">
+        android:id="@+id/leafyBuyProizvodiFragment"
+        android:name="com.electroniccode.leafy.fragments.LeafyBuyProizvodiFragment"
+        android:label="leafy_buy_proizvodi_fragment"
+        tools:layout="@layout/leafy_buy_proizvodi_fragment" >
         <action
-            android:id="@+id/action_tradeSlikaFragment_to_tradeOpisFragment"
-            app:destination="@id/tradeOpisFragment"
+            android:id="@+id/action_leafyBuyProizvodiFragment_to_buyProizvodDetailsFragment"
+            app:destination="@id/buyProizvodDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
             app:launchSingleTop="true"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/tradeSlikaFragment" />
+            app:popUpTo="@id/leafyBuyProizvodiFragment" />
+        <argument
+            android:name="proizvodiData"
+            app:argType="com.electroniccode.leafy.models.Proizvodi" />
     </fragment>
-
     <fragment
-        android:id="@+id/tradeOpisFragment"
-        android:name="com.electroniccode.leafy.fragments.TradeOpisFragment"
-        android:label="Opis proizvoda"
-        tools:layout="@layout/trade_opis_fragment">
-        <action
-            android:id="@+id/action_tradeOpisFragment_to_tradeCijenaFragment"
-            app:destination="@id/tradeCijenaFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/tradeOpisFragment" />
+        android:id="@+id/buyProizvodDetailsFragment"
+        android:name="com.electroniccode.leafy.fragments.BuyProizvodDetailsFragment"
+        android:label="BuyProizvodDetailsFragment" >
+        <argument
+            android:name="proizvod"
+            app:argType="com.electroniccode.leafy.models.Proizvod"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
-
-    <fragment
-        android:id="@+id/tradeCijenaFragment"
-        android:name="com.electroniccode.leafy.fragments.TradeCijenaFragment"
-        android:label="Cijena proizvoda"
-        tools:layout="@layout/trade_cijena_fragment"/>
 
 </navigation>

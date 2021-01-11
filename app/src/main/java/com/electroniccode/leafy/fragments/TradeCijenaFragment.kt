@@ -2,6 +2,7 @@ package com.electroniccode.leafy.fragments
 
 import android.os.Bundle
 import android.text.InputType
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ class TradeCijenaFragment : Fragment() {
     private var _binding: TradeCijenaFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by navGraphViewModels<LeafyTradeViewModel>(R.id.navigation_graph)
+    private val viewModel by navGraphViewModels<LeafyTradeViewModel>(R.id.create_proizvod_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +28,12 @@ class TradeCijenaFragment : Fragment() {
     ): View? {
         _binding = TradeCijenaFragmentBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val transition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = transition
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +46,7 @@ class TradeCijenaFragment : Fragment() {
             it?.let {
                 if(it.isNotEmpty())
                     viewModel.setCijena(it.toString().toFloat())
+                else binding.tradeNextbtn.visibility = View.GONE
 
                 if(viewModel.isCijenaValid()) {
                     binding.tradeCijenaInputLayout.error = null
@@ -50,6 +58,10 @@ class TradeCijenaFragment : Fragment() {
                 }
             }
 
+        }
+
+        binding.tradeNextbtn.setOnClickListener {
+            findNavController().navigate(TradeCijenaFragmentDirections.actionTradeCijenaFragmentToTradePhoneFragment())
         }
 
     }
