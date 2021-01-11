@@ -1,8 +1,13 @@
 package com.electroniccode.leafy.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,13 +27,14 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.gson.Gson
+import id.zelory.compressor.loadBitmap
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import kotlin.math.log
 import kotlin.math.log10
 
 const val LOCATION_PERM = 250
@@ -44,119 +50,92 @@ class LeafyBuyFragment : Fragment() {
     private lateinit var dataHashMap: HashMap<*, *>
 
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
+
+    private var requestingUpdates = false
+
+    private var lokacija = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = LeafyBuyFragmentBinding.inflate(inflater, container, false)
-        dropdown = (binding.tradeProizvodiDropdown.editText) as AutoCompleteTextView
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         NavigationUI.setupWithNavController(binding.sellCropToolbar, findNavController())
 
-        setupDropDownProizvoda()
+        fusedLocationProvider =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         binding.buySearchBtn.setOnClickListener {
-
-            if (izabranProizvod.isNotEmpty()) {
-
-                getUserLocation()
-
-                binding.buySearchBtn.isEnabled = false
-                binding.buySearchBtn.text = resources.getString(R.string.pretrazivanje_text)
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    "Morate izabrati proizvod !",
-                    Snackbar.LENGTH_SHORT
-                ).apply {
-                    setBackgroundTint(resources.getColor(R.color.errorRed, null))
-                }.show()
-            }
+            checkSettings()
         }
-
-        fusedLocationProvider = LocationServices.getFusedLocationProviderClient(requireContext())
-    }
-
-    fun setupDropDownProizvoda() {
-
-        val adapter = ArrayAdapterWithIcon(
-            requireContext(),
-            R.layout.spinner_row,
-            Constants.proizvodi
-        )
-
-        dropdown.setAdapter(adapter)
-
-        dropdown.setOnItemClickListener { parent, view, position, id ->
-            izabranProizvod = adapter.getItem(position).toString()
-        }
-
 
     }
 
-    @SuppressLint("MissingPermission")
     @AfterPermissionGranted(LOCATION_PERM)
-    public fun getUserLocation() {
-        Log.d("TAG", "Pokrenuta funkcija: ")
-        if (EasyPermissions.hasPermissions(requireContext(), *Constants.locationPerm)) {
-            fusedLocationProvider.lastLocation.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    task.result?.let {
+    fun checkSettings() {
+        checkLocationSettings()
+    }
 
-                        dataHashMap = hashMapOf(
-                            "lat" to it.latitude,
-                            "lng" to it.longitude,
-                            "vrsta" to izabranProizvod
-                        )
+    fun checkLocationSettings() {
 
-                        getProizvodiFromRadius()
+        val locationRequest = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
-                    } ?: run {
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
 
-                        binding.buySearchBtn.isEnabled = true
-                        binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)
+        val client = LocationServices.getSettingsClient(requireContext())
+        val task = client.checkLocationSettings(builder.build())
 
-                        Snackbar.make(
-                            binding.root,
-                            "Greška pri određivanju lokacije !",
-                            Snackbar.LENGTH_SHORT
-                        ).apply {
-                            setBackgroundTint(resources.getColor(R.color.errorRed, null))
-                        }.show()
-                    }
-                } else {
+        task.addOnSuccessListener {
+            checkPermissionsAndNavigate()
+        }
 
-                    binding.buySearchBtn.isEnabled = true
-                    binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)
+        task.addOnFailureListener {
+            enableGpsSettings()
+            Log.e("TAG", "checkLocationSettings: ", it)
+        }
 
-                    Snackbar.make(
-                        binding.root,
-                        "Greška pri određivanju lokacije !",
-                        Snackbar.LENGTH_SHORT
-                    ).apply {
-                        setBackgroundTint(resources.getColor(R.color.errorRed, null))
-                    }.show()
-                }
+    }
 
-            }
-
+    fun checkPermissionsAndNavigate() {
+        if(EasyPermissions.hasPermissions(requireContext(), *Constants.locationPerm)) {
+            findNavController().navigate(LeafyBuyFragmentDirections.actionLeafyBuyFragmentToBuyFragmentMap())
         } else EasyPermissions.requestPermissions(
             this,
             getString(R.string.lokacija_permission_rationale),
             LOCATION_PERM,
             *Constants.locationPerm
         )
-
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("requestingLocationUpdatesKey", requestingUpdates)
+        super.onSaveInstanceState(outState)
+    }
+
+    fun enableGpsSettings() {
+        val intent = Intent(
+            Settings.ACTION_LOCATION_SOURCE_SETTINGS
+        )
+        startActivity(intent)
+    }
+
+    fun isGpsEnabled(): Boolean =
+        ((requireContext().getSystemService(Context.LOCATION_SERVICE)) as LocationManager)
+            .isProviderEnabled(LocationManager.GPS_PROVIDER)
 
     fun getProizvodiFromRadius() {
 
-        if(dataHashMap.isNotEmpty()) {
+        if (dataHashMap.isNotEmpty()) {
             val functions = FirebaseFunctions.getInstance("europe-west1")
 
             functions.getHttpsCallable("getProizvodiFromRadius")
@@ -170,17 +149,26 @@ class LeafyBuyFragment : Fragment() {
                         val gson = Gson()
                         val stringJson = gson.toJson(it.result?.data)
 
+                        Log.d("TAG", "getProizvodiFromRadius: $stringJson")
+
                         val proizvodiObject = mapper.readValue<Proizvodi>(stringJson)
 
 
                         //if(((map.get("listaProizvoda")) as ArrayList<String>).size != 0) {
-                            /*for(id in (map.get("listaProizvoda")) as ArrayList<String>) {
-                                proizvodi.add(id)
-                                Log.d("TAG", "\n$id\n\n")
-                            }*/
+                        /*for(id in (map.get("listaProizvoda")) as ArrayList<String>) {
+                            proizvodi.add(id)
+                            Log.d("TAG", "\n$id\n\n")
+                        }*/
 
-                        if(proizvodiObject.idProizvoda.isNotEmpty()) {
-                            findNavController().navigate(LeafyBuyFragmentDirections.actionLeafyBuyFragmentToLeafyBuyProizvodiFragment(proizvodiObject))
+                        if (proizvodiObject.idProizvoda.isNotEmpty()) {
+
+
+
+                            /*findNavController().navigate(
+                                LeafyBuyFragmentDirections.actionLeafyBuyFragmentToLeafyBuyProizvodiFragment(
+                                    proizvodiObject
+                                )
+                            )*/
                         } else {
                             binding.buySearchBtn.isEnabled = true
                             binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)

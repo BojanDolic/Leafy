@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sellCropToolbar"
-        app:layout_constraintBottom_toTopOf="@id/buy_select_card"
+        app:layout_constraintBottom_toTopOf="@id/buy_searchBtn"
         app:layout_constraintVertical_chainStyle="packed">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +82,7 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+   <!-- <com.google.android.material.card.MaterialCardView
         android:id="@+id/buy_select_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView> -->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buy_searchBtn"
@@ -132,18 +132,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensans_bold"
-        android:text="@string/pretrazi_text"
-        app:icon="@drawable/search_icon"
+        android:text="Nastavi"
+        app:icon="@drawable/next_icon"
         app:strokeColor="@color/stroke_button_states"
         app:strokeWidth="1dp"
         android:enabled="true"
         app:iconPadding="9dp"
         app:iconGravity="end"
         app:iconSize="18dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buy_select_card"
+        app:layout_constraintTop_toBottomOf="@id/trade_proizvod_card"
         android:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

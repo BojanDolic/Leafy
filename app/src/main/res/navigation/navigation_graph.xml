@@ -342,9 +342,8 @@
         android:label="Leafy buy"
         tools:layout="@layout/leafy_buy_fragment">
         <action
-            android:id="@+id/action_leafyBuyFragment_to_leafyBuyProizvodiFragment"
-            app:destination="@id/leafyBuyProizvodiFragment"
-            app:enterAnim="@android:anim/slide_in_left"
+            android:id="@+id/action_leafyBuyFragment_to_buyFragmentMap"
+            app:destination="@id/buyFragmentMap"
             app:launchSingleTop="true"
             app:popUpTo="@id/leafyBuyFragment" />
     </fragment>
@@ -353,15 +352,14 @@
         android:name="com.electroniccode.leafy.fragments.LeafyBuyProizvodiFragment"
         android:label="leafy_buy_proizvodi_fragment"
         tools:layout="@layout/leafy_buy_proizvodi_fragment" >
-        <action
-            android:id="@+id/action_leafyBuyProizvodiFragment_to_buyProizvodDetailsFragment"
-            app:destination="@id/buyProizvodDetailsFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/leafyBuyProizvodiFragment" />
         <argument
             android:name="proizvodiData"
             app:argType="com.electroniccode.leafy.models.Proizvodi" />
+        <action
+            android:id="@+id/action_leafyBuyProizvodiFragment_to_buyProizvodDetailsFragment"
+            app:destination="@id/buyProizvodDetailsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/leafyBuyProizvodiFragment" />
     </fragment>
     <fragment
         android:id="@+id/buyProizvodDetailsFragment"
@@ -372,6 +370,17 @@
             app:argType="com.electroniccode.leafy.models.Proizvod"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyFragmentMap"
+        android:name="com.electroniccode.leafy.fragments.BuyFragmentMap"
+        android:label="map_buy_fragment"
+        tools:layout="@layout/map_buy_fragment" >
+        <action
+            android:id="@+id/action_buyFragmentMap_to_leafyBuyProizvodiFragment"
+            app:destination="@id/leafyBuyProizvodiFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/buyFragmentMap" />
     </fragment>
 
 </navigation>
