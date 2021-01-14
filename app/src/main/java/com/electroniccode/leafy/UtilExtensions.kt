@@ -43,3 +43,9 @@ suspend inline fun <reified T> FirebaseFirestore.getDocuments(ids: List<String>,
     return lista
 }
 
+fun deleteFirebaseDocument(documentPath: String) {
+    FirebaseFirestore.getInstance()
+        .document(documentPath)
+        .delete()
+}
+

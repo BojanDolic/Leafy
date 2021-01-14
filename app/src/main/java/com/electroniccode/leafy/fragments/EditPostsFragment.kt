@@ -18,7 +18,7 @@ class EditPostsFragment : Fragment() {
     private var _binding: EditPostsFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val tabTitles = arrayOf("Pitanja", "Prodaja žitarica")
+    private val tabTitles = arrayOf("Pitanja", "Proizvodi")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

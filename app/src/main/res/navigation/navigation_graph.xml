@@ -371,10 +371,11 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+
     <fragment
         android:id="@+id/buyFragmentMap"
         android:name="com.electroniccode.leafy.fragments.BuyFragmentMap"
-        android:label="map_buy_fragment"
+        android:label=""
         tools:layout="@layout/map_buy_fragment" >
         <action
             android:id="@+id/action_buyFragmentMap_to_leafyBuyProizvodiFragment"

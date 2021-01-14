@@ -54,6 +54,8 @@ class CreatePitanjeFragment : Fragment() {
     private var _binding: CreatePitanjeFragmentBinding? = null
     val binding get() = _binding!!
 
+    private lateinit var countDownTimer: CountDownTimer
+
     var inputStream: InputStream? = null
 
     override fun onCreateView(
@@ -102,9 +104,15 @@ class CreatePitanjeFragment : Fragment() {
 
                 viewModel.obradaPitanja.value = true
 
+                // Ako slika nije izabrana
                 if (viewModel.slikaUri == null) {
 
-                    val pitanje = Pitanje(tekstPitanja =  pitanjeText, opis = opisText, datum = Timestamp.now(), idAutora = user?.uid!!)
+                    val pitanje = Pitanje(
+                        tekstPitanja = pitanjeText,
+                        opis = opisText,
+                        datum = Timestamp.now(),
+                        idAutora = user?.uid!!
+                    )
 
                     database.collection("pitanja").document().set(pitanje)
                         .addOnCompleteListener {
@@ -115,19 +123,10 @@ class CreatePitanjeFragment : Fragment() {
                                     binding.root,
                                     "Pitanje postavljeno.",
                                     Snackbar.LENGTH_SHORT
-                                ).apply {
-                                    setBackgroundTint(resources.getColor(R.color.darkGreen))
-                                }.show()
+                                ).show()
 
-                                object : CountDownTimer(2000, 1000) {
-
-                                    override fun onTick(millisUntilFinished: Long) {
-                                    }
-
-                                    override fun onFinish() {
-                                        findNavController().navigateUp()
-                                    }
-                                }.start()
+                                // Countdown za izlaz iz fragmenta
+                                setCountDown(1.5f)
 
                             } else viewModel.obradaPitanja.value = false
 
@@ -157,19 +156,20 @@ class CreatePitanjeFragment : Fragment() {
 
                     val imageUri = Uri.fromFile(compressedImage)
 
-                    if(imageUri != null) {
+                    if (imageUri != null) {
 
                         storageRef.putFile(imageUri).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 storageRef.downloadUrl.addOnCompleteListener {
-                                    if(it.isSuccessful) {
+                                    if (it.isSuccessful) {
 
                                         val pitanje = Pitanje(
-                                            tekstPitanja =  pitanjeText,
+                                            tekstPitanja = pitanjeText,
                                             opis = opisText,
-                                            slikaPitanja =  it.result.toString(),
+                                            slikaPitanja = it.result.toString(),
                                             datum = Timestamp.now(),
-                                            idAutora = user?.uid!!)
+                                            idAutora = user?.uid!!
+                                        )
 
                                         database.collection("pitanja").document().set(pitanje)
                                             .addOnCompleteListener {
@@ -184,15 +184,8 @@ class CreatePitanjeFragment : Fragment() {
                                                         setBackgroundTint(resources.getColor(R.color.darkGreen))
                                                     }.show()
 
-                                                    object : CountDownTimer(2000, 1000) {
-
-                                                        override fun onTick(millisUntilFinished: Long) {
-                                                        }
-
-                                                        override fun onFinish() {
-                                                            findNavController().navigateUp()
-                                                        }
-                                                    }.start()
+                                                    // Countdown za izlaz iz fragmenta
+                                                    setCountDown(1.5f)
 
                                                 } else viewModel.obradaPitanja.value = false
 
@@ -209,8 +202,7 @@ class CreatePitanjeFragment : Fragment() {
 
                         }
 
-                   }
-
+                    }
 
 
                 }
@@ -225,6 +217,18 @@ class CreatePitanjeFragment : Fragment() {
 
         }
 
+    }
+
+    fun setCountDown(seconds: Float) {
+        viewModel.countDownTimer = object : CountDownTimer((seconds * 1000).toLong(), 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                findNavController().navigateUp()
+            }
+        }.start()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -249,6 +253,7 @@ class CreatePitanjeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModel.countDownTimer?.cancel()
     }
 
 

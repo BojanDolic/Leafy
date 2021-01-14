@@ -155,8 +155,8 @@
     <string name="pretrazi_text">Pretraži</string>
     <string name="pretrazivanje_text">Pretraživanje...</string>
     <string name="lokacija_permission_rationale">Aplikacija Leafy zahtijeva Vašu lokaciju kako bi mogla odrediti Vašu trenutnu lokaciju pri pretraživanju proizvoda u Vašoj blizini.\nAko odbijete korištenje Vaše lokacije neke od funkcija aplikacije neće raditi.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="delete_prodajno_mjesto_dialog_desc">Da li želite obrisati ovo prodajno mjesto ?\n\nBrisanjem ovog prodajnog mjesta gubite mogućnost njegovog korištenja, ali proizvodi povezani sa ovim prodajnim mjestom će ostati.</string>
 
 
 </resources>

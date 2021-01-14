@@ -11,7 +11,34 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#000000</item>
-        <!-- Customize your theme here. -->
+
+        <item name="materialAlertDialogTheme">@style/MaterialAlertDialog.Theme</item>
+
+    </style>
+
+    <style name="MaterialAlertDialog.Theme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/RoundedCardStyle</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/DialogTitleTextStyle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/DialogBodyTextStyle</item>
+    </style>
+
+    <style name="RoundedCardStyle" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/RoundedCardAppearance</item>
+    </style>
+
+    <style name="RoundedCardAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="DialogTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="DialogBodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 

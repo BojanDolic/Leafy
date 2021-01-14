@@ -2,26 +2,28 @@ package com.electroniccode.leafy.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electroniccode.leafy.interfaces.OnDataChangedListener
-import com.electroniccode.leafy.adapters.ForumPostsEditAdapter
-import com.electroniccode.leafy.databinding.FragmentForumPostsBinding
+import com.electroniccode.leafy.adapters.ProizvodiPostsEditAdapter
+import com.electroniccode.leafy.databinding.ProizvodiPostsFragmentBinding
 import com.electroniccode.leafy.deleteFirebaseDocument
-import com.electroniccode.leafy.models.Pitanje
+import com.electroniccode.leafy.interfaces.OnAdapterItemClickedListener
+import com.electroniccode.leafy.models.Proizvod
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ForumPostsFragment : Fragment(), ForumPostsEditAdapter.OnForumEditPostCardClick,
-    OnDataChangedListener {
+class ProizvodiPostsFragment
+    : Fragment(), OnDataChangedListener, OnAdapterItemClickedListener {
 
-    private var _binding: FragmentForumPostsBinding? = null
+    private var _binding: ProizvodiPostsFragmentBinding? = null
     private val binding get() = _binding!!
 
     private val user by lazy { FirebaseAuth.getInstance().currentUser }
@@ -30,7 +32,7 @@ class ForumPostsFragment : Fragment(), ForumPostsEditAdapter.OnForumEditPostCard
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentForumPostsBinding.inflate(inflater, container, false)
+        _binding = ProizvodiPostsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,54 +40,54 @@ class ForumPostsFragment : Fragment(), ForumPostsEditAdapter.OnForumEditPostCard
         super.onViewCreated(view, savedInstanceState)
 
         user?.let {
-
             val query = FirebaseFirestore.getInstance()
-                .collection("pitanja")
-                .whereEqualTo("idAutora", it.uid)
+                .collection("proizvodi")
+                .whereEqualTo("autorID", it.uid)
 
 
-            val options = FirestoreRecyclerOptions.Builder<Pitanje>()
+            val options = FirestoreRecyclerOptions.Builder<Proizvod>()
                 .setLifecycleOwner(viewLifecycleOwner)
-                .setQuery(query, Pitanje::class.java)
+                .setQuery(query, Proizvod::class.java)
                 .build()
 
-            val adapter = ForumPostsEditAdapter(options)
-            adapter.setOnForumEditPostCardClickedListener(this)
-            adapter.setDataListener(this)
-            binding.editForumPostsRecyclerview.apply {
+            val adapter = ProizvodiPostsEditAdapter(options)
+            adapter.setOnItemClickedListener(this)
+            adapter.setOnDataChangedListener(this)
+
+            binding.proizvodiEditRecycler.apply {
                 this.adapter = adapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
 
-
-        }
-
-    }
-
-    /**
-     * Poziva se kada korisnik napravi dugi klik na jednu od kartica pitanja
-     * Pojavljuje se popup meni za brisanje pitanja
-     */
-    override fun onForumPostLongClicked(dokument: DocumentSnapshot?) {
-        dokument?.let {
-            showDeleteDialog(it)
         }
     }
 
     /**
-     * Funkcija koja prikazuje dialog za brisanje pitanja
+     * Poziva se kada korisnik ostvari dugi click sa jednim od cardova
      *
-     * @param document Dokument kojeg treba izbrisati
+     * @param dokument Dokument kojeg treba izbrisati
+     */
+    override fun onItemLongClicked(dokument: DocumentSnapshot?) {
+
+        dokument?.let {
+            showDeleteDialog(dokument)
+        }
+    }
+
+    /**
+     * Funkcija koja prikazuje dialog za brisanje proizvoda
+     *
+     * @param dokument Dokument kojeg treba izbrisati
      *
      * @see com.electroniccode.leafy.deleteFirebaseDocument
      */
-    fun showDeleteDialog(document: DocumentSnapshot) {
+    fun showDeleteDialog(dokument: DocumentSnapshot) {
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Obrisati pitanje ?")
-            .setMessage("Da li želite obrisati ovo pitanje ?\nAko obrišete pitanje više ga nećete moći vratiti.")
+            .setTitle("Obrisati proizvod ?")
+            .setMessage("Da li želite obrisati ovaj proizvod ?\nAko obrišete proizvod više ga nećete moći vratiti, a ostali korisnici ga neće moći vidjeti pri pretrazi !")
             .setPositiveButton("Obriši", DialogInterface.OnClickListener { dialog, which ->
-                deleteFirebaseDocument(document.reference.path)
+                deleteFirebaseDocument(dokument.reference.path)
             })
             .setNegativeButton("Odustani", DialogInterface.OnClickListener { dialog, which ->
                 dialog.cancel()
@@ -93,20 +95,25 @@ class ForumPostsFragment : Fragment(), ForumPostsEditAdapter.OnForumEditPostCard
             .show()
     }
 
+    /**
+     * Skriva UI element koji obavještava korisnika da nema elemenata za prikaz
+     */
     override fun hideNoDataPlaceHolder() {
         binding.noDataContainer.visibility = View.GONE
-        binding.editForumPostsRecyclerview.visibility = View.VISIBLE
+        binding.proizvodiEditRecycler.visibility = View.VISIBLE
     }
 
+    /**
+     * Prikazuje UI element koji obavještava korisnika da nema elemenata za prikaz
+     */
     override fun showNoDataPlaceHolder() {
-        binding.editForumPostsRecyclerview.visibility = View.GONE
         binding.noDataContainer.visibility = View.VISIBLE
+        binding.proizvodiEditRecycler.visibility = View.GONE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

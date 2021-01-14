@@ -34,6 +34,11 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
 import com.google.gson.Gson
 
+/**
+ * Fragment koji prikazuje trenutnu lokaciju korisnika na mapi
+ * Izborom proizvoda i klikom na dugme "Pretraži"
+ */
+
 class BuyFragmentMap : Fragment(), OnMapReadyCallback {
 
     private var _binding: MapBuyFragmentBinding? = null
@@ -45,6 +50,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
     private var izabranProizvod = ""
 
     private var dataHashMap: MutableLiveData<HashMap<*, *>> = MutableLiveData()
+    private val isSearching: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -72,11 +78,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
 
         dataHashMap.observe(viewLifecycleOwner, { hashmap ->
 
-            Log.d("TAG", "onViewCreated: " +
-                    "${hashmap.get("lat").toString()}" +
-                    "\n${hashmap.get("lng").toString()}")
-
-            if (hashmap.isNotEmpty() && izabranProizvod.isNotEmpty())
+            if (hashmap.isNotEmpty() && izabranProizvod.isNotEmpty() && !isSearching.value!!)
                 binding.buySearchBtn.isEnabled = true
 
         })
@@ -85,6 +87,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
 
             dataHashMap.value?.let { hashmap ->
                 if (hashmap.isNotEmpty() && izabranProizvod.isNotEmpty()) {
+                    isSearching.value = true
                     getProizvodiFromRadius()
                 } else {
                     showErrorSnackbar(
@@ -100,16 +103,41 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
             }
 
         }
+        
+        observeSearchingBool()
 
 
     }
 
+    /**
+     * U zavisnosti od vrijednosti booleana, postavlja UI elemente na enabled/disabled
+     */
+    fun observeSearchingBool() {
+        
+        isSearching.observe(viewLifecycleOwner, { searching ->
+
+            if(searching) {
+                dropdown.isEnabled = false
+
+                binding.buySearchBtn.isEnabled = false
+                binding.buySearchBtn.text = getText(R.string.pretrazivanje_text)
+
+            } else {
+                dropdown.isEnabled = true
+
+                binding.buySearchBtn.isEnabled = true
+                binding.buySearchBtn.text = getText(R.string.pretrazi_text)
+            }
+        })
+        
+    }
+    
     @SuppressLint("MissingPermission")
     override fun onMapReady(p0: GoogleMap?) {
         p0 ?: return
-
         map = p0
 
+        map.uiSettings.isMyLocationButtonEnabled = false
         map.isMyLocationEnabled = true
 
         fusedLocationProvider.lastLocation.addOnCompleteListener {
@@ -127,7 +155,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
                     map.animateCamera(
                         CameraUpdateFactory.newLatLngZoom(
                             LatLng(location.latitude, location.longitude),
-                            10f
+                            11f
                         )
                     )
 
@@ -153,7 +181,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
                     map.animateCamera(
                         CameraUpdateFactory.newLatLngZoom(
                             LatLng(location.latitude, location.longitude),
-                            10f
+                            11f
                         )
                     )
 
@@ -207,15 +235,22 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
 
                         val proizvodiObject = convertToProizvodiObject(it)
 
+                        // Ako postoje proizvodi, navigira na listu proizvoda
                         if (proizvodiObject.idProizvoda.isNotEmpty()) {
+
+                            isSearching.value = false
+
                             findNavController().navigate(
                                 BuyFragmentMapDirections.actionBuyFragmentMapToLeafyBuyProizvodiFragment(
                                     proizvodiObject
                                 )
                             )
                         } else {
-                            binding.buySearchBtn.isEnabled = true
-                            binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)
+
+                            isSearching.value = false
+
+                            /*binding.buySearchBtn.isEnabled = true
+                            binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)*/
 
                             Snackbar.make(
                                 binding.root,
@@ -227,8 +262,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
                     } catch (e: Exception) {
                         Log.e("TAG", "onViewCreated: ", e)
 
-                        binding.buySearchBtn.isEnabled = true
-                        binding.buySearchBtn.text = resources.getString(R.string.pretrazi_text)
+                        isSearching.value = false
 
                         showErrorSnackbar(
                             binding.root,
@@ -236,7 +270,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
                         )
                     }
                 }
-        }
+        } else isSearching.value = false
 
     }
 
@@ -279,11 +313,12 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        fusedLocationProvider.removeLocationUpdates(locationCallback)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        fusedLocationProvider.removeLocationUpdates(locationCallback)
+
     }
 
 }

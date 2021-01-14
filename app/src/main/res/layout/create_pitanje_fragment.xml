@@ -128,8 +128,10 @@
         android:drawablePadding="24dp"
         android:text="Postavite pitanje"
         android:textColor="#fff"
+        android:fontFamily="@font/opensans_bold"
         app:icon="@drawable/upload_cloud_icon"
         app:iconTint="#fff"
+        app:backgroundTint="@color/mainColor"
         app:layout_anchor="@id/pitanje_content_container"
         app:layout_anchorGravity="bottom|center" />
 

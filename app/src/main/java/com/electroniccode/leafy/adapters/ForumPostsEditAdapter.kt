@@ -3,31 +3,36 @@ package com.electroniccode.leafy.adapters
 import android.text.TextUtils
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.electroniccode.leafy.interfaces.OnDataChangedListener
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.ForumCardBinding
 import com.electroniccode.leafy.models.Pitanje
 import com.electroniccode.leafy.models.User
-import com.firebase.ui.firestore.paging.FirestorePagingAdapter
-import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.DateFormat
 
 
-class ForumPostsEditAdapter(options: FirestorePagingOptions<Pitanje>) : FirestorePagingAdapter<Pitanje, ForumPostsEditAdapter.PostsViewHolder>(options) {
+class ForumPostsEditAdapter(options: FirestoreRecyclerOptions<Pitanje>) : FirestoreRecyclerAdapter<Pitanje, ForumPostsEditAdapter.PostsViewHolder>(options) {
 
     public interface OnForumEditPostCardClick {
         fun onForumPostLongClicked(dokument: DocumentSnapshot?)
     }
 
     private lateinit var listener: OnForumEditPostCardClick
+    private lateinit var dataListener: OnDataChangedListener
 
     fun setOnForumEditPostCardClickedListener(listener: OnForumEditPostCardClick) {
         this.listener = listener
+    }
+
+    fun setDataListener(listener: OnDataChangedListener) {
+        this.dataListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
@@ -39,11 +44,20 @@ class ForumPostsEditAdapter(options: FirestorePagingOptions<Pitanje>) : Firestor
         holder.bindData(model)
     }
 
+
+    override fun onDataChanged() {
+
+        if(itemCount == 0) {
+            dataListener.showNoDataPlaceHolder()
+        } else {
+            dataListener.hideNoDataPlaceHolder()
+        }
+
+    }
+
     inner class PostsViewHolder(private val cardBinding: ForumCardBinding) : RecyclerView.ViewHolder(cardBinding.root) {
 
         fun bindData(pitanje: Pitanje) = with(cardBinding) {
-
-            getItem(adapterPosition)
 
             forumCardTitle.text = pitanje.tekstPitanja
 
@@ -87,7 +101,7 @@ class ForumPostsEditAdapter(options: FirestorePagingOptions<Pitanje>) : Firestor
                 }
 
             root.setOnLongClickListener {
-                listener.onForumPostLongClicked(getItem(adapterPosition))
+                listener.onForumPostLongClicked(snapshots.getSnapshot(adapterPosition))
                 true
             }
 

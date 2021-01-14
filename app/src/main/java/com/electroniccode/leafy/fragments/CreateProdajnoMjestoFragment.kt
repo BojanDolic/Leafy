@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.CreateProdajnoMjestoFragmentBinding
@@ -20,6 +21,7 @@ import com.electroniccode.leafy.viewmodels.CreateProdajnoMjestoViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -96,6 +98,24 @@ class CreateProdajnoMjestoFragment : Fragment(), OnMapReadyCallback, GoogleMap.O
         marker = map?.addMarker(markerOptions)
         binding.createProdajnoMjestoDaljeBtn.isEnabled = true
 
+        addCircle(latLng)
+
+    }
+
+    /**
+     * Dodaje krug oko markera da korisnik vizuelno vidi koliko kilometara obuhvata njegovo prodajno mjesto
+     *
+     * @param latLng Koordinate gdje će se nalaziti centar kruga
+     */
+    fun addCircle(latLng: LatLng?) {
+        val optionsCircle = CircleOptions()
+            .center(latLng)
+            .radius(10000.0)
+            .fillColor(resources.getColor(R.color.circleColor, null))
+            .strokeColor(resources.getColor(R.color.mainColor, null))
+            .strokeWidth(3f)
+
+        map?.addCircle(optionsCircle)
     }
 
     @SuppressLint("MissingPermission")
@@ -161,23 +181,32 @@ class CreateProdajnoMjestoFragment : Fragment(), OnMapReadyCallback, GoogleMap.O
             .setMessage("Unesite ime vašeg prodajnog mjesta (Kuća npr.). Ime neće biti vidljivo drugim korisnicima !")
             .setPositiveButton("Dodaj mjesto", DialogInterface.OnClickListener { dialog, which ->
 
-                val imeProdajnogMjesta = inflatedView.dialogEdittext.text.toString()
-
-                if(imeProdajnogMjesta.isEmpty() || (imeProdajnogMjesta.length > 15 && imeProdajnogMjesta.length < 4))
-                    inflatedView.dialogEdittext.error = "Ime mjesta mora biti manje od 15 karaktera i veće od 3 karaktera"
-                else {
-                    val mjesto = Mjesto(
-                        imeProdajnogMjesta,
-                        marker?.position?.latitude!!,
-                        marker?.position?.longitude!!)
-
-                    insertMjestoIntoDatabase(mjesto)
-                }
+            })
+            .setNegativeButton("Poništi", DialogInterface.OnClickListener { dialog, which ->
 
             })
-            .setNegativeButton("Poništi", DialogInterface.OnClickListener { dialog, which ->  })
 
-        alertDialogBuilder.show()
+        val dialog = alertDialogBuilder.create()
+        dialog.show()
+
+        inflatedView.dialogEdittext.addTextChangedListener { text ->
+            text ?: dialog.dismiss()
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).isEnabled = text.toString().isNotEmpty() && text.toString().length > 3
+        }
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener { btn ->
+            val mjesto = Mjesto(
+                inflatedView.dialogEdittext.text.toString(),
+                marker?.position?.latitude!!,
+                marker?.position?.longitude!!)
+
+            insertMjestoIntoDatabase(mjesto)
+            dialog.dismiss()
+        }
+
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener { btn ->
+            dialog.dismiss()
+        }
 
     }
 

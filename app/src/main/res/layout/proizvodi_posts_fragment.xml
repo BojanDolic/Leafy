@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.ForumPostsFragment"
+    tools:context=".fragments.ProizvodiPostsFragment"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/edit_forum_posts_recyclerview"
+        android:id="@+id/proizvodi_edit_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
@@ -36,13 +36,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nemate postavljenih pitanja"
+            android:text="Nemate objavljenih proizvoda"
             android:fontFamily="@font/opensans_regular"
             android:textSize="20sp"
             android:layout_marginTop="16dp"/>
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
