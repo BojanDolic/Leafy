@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
     android:orientation="vertical">
 
     <FrameLayout
@@ -12,11 +11,14 @@
 
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/preparat_card"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_marginTop="38dp"
             app:cardCornerRadius="16dp"
             app:cardUseCompatPadding="true"
+            app:cardElevation="6dp"
+            android:translationZ="6dp"
             android:clickable="true"
             app:cardBackgroundColor="@color/darkGreen"
             android:foreground="?attr/selectableItemBackground">
@@ -48,7 +50,9 @@
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/opensans_extrabold"
                     android:textColor="@color/white"
-                    android:textSize="36sp"/>
+                    android:textSize="36sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
 
                 <TextView
@@ -75,7 +79,9 @@
             android:id="@+id/leafy_book_slika_preparata"
             android:layout_width="120dp"
             android:layout_height="200dp"
-            android:elevation="9dp"
+            android:elevation="6dp"
+            android:translationZ="6dp"
+            android:layout_marginStart="12dp"
             android:src="@drawable/retengo_shadow"/>
 
 

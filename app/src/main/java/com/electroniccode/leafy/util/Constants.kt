@@ -16,6 +16,10 @@ object Constants {
     const val TIP_BOLEST = 1
     const val TIP_OSTALO = 2
 
+    //region Leafy book kategorije
+    const val KATEGORIJA_BILJKE = "biljke"
+    const val KATEGORIJA_FUNGICIDI = "preparati"
+    //endregion
 
     val proizvodi = arrayOf(
         "Kukuruz",

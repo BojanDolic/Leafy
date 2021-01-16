@@ -80,6 +80,11 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_mainFragment_to_leafyBookFragment"
+            app:destination="@id/leafyBookFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -382,6 +387,42 @@
             app:destination="@id/leafyBuyProizvodiFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/buyFragmentMap" />
+    </fragment>
+    <fragment
+        android:id="@+id/leafyBookListFragment"
+        android:name="com.electroniccode.leafy.fragments.LeafyBookListFragment"
+        android:label="leafy_book_list_fragment"
+        tools:layout="@layout/leafy_book_list_fragment" >
+        <argument
+            android:name="kategorija"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_leafyBookListFragment_to_preparatDetailsFragment"
+            app:destination="@id/preparatDetailsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/leafyBookListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leafyBookFragment"
+        android:name="com.electroniccode.leafy.fragments.LeafyBookFragment"
+        android:label="leafy_book_fragment"
+        tools:layout="@layout/leafy_book_fragment" >
+        <action
+            android:id="@+id/action_leafyBookFragment_to_leafyBookListFragment"
+            app:destination="@id/leafyBookListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/leafyBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preparatDetailsFragment"
+        android:name="com.electroniccode.leafy.fragments.PreparatDetailsFragment"
+        android:label="preparat_details_fragment"
+        tools:layout="@layout/preparat_details_fragment" >
+        <argument
+            android:name="preparat"
+            app:argType="com.electroniccode.leafy.models.Preparat"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
 </navigation>

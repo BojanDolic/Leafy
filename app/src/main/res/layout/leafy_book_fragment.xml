@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    tools:context=".fragments.LeafyBookFragment"
+    android:background="@color/backgroundColor">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/book_opis_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:transitionName="sellCropsCard"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/book_biljke_card"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/book_opis_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:tint="@color/errorRed"
+                android:src="@drawable/book_icon"
+                app:layout_constraintBottom_toTopOf="@id/book_opis_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/book_opis_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Leafy book"
+                android:textAlignment="center"
+                android:textSize="19sp"
+                android:layout_marginTop="12dp"
+                android:transitionName="sellCropsText"
+                app:layout_constraintBottom_toTopOf="@id/book_opis_card_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/book_opis_icon" />
+
+
+            <TextView
+                android:id="@+id/book_opis_card_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_light"
+                android:text="@string/leafy_book_opis"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:transitionName="sellCropsText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/book_opis_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/book_biljke_card"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_opis_card"
+        app:layout_constraintBottom_toTopOf="@id/book_bolesti_card"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:foreground="?attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/book_biljke_icon"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/biljke_icon"
+                android:layout_marginStart="12dp"
+                app:tint="@color/mainColor"
+                app:layout_constraintTop_toTopOf="@id/book_biljke_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/book_biljke_text" />
+
+            <TextView
+                android:id="@+id/book_biljke_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BILJKE"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/book_biljke_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/book_bolesti_card"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_biljke_card"
+        app:layout_constraintBottom_toTopOf="@id/book_herbicidi_card"
+        android:foreground="?attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/book_bolesti_icon"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/bolest_icon"
+                android:layout_marginStart="12dp"
+                app:tint="@color/darkGreen"
+                app:layout_constraintTop_toTopOf="@id/book_bolesti_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/book_bolesti_text" />
+
+            <TextView
+                android:id="@+id/book_bolesti_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BOLESTI"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/book_bolesti_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/book_herbicidi_card"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_bolesti_card"
+        app:layout_constraintBottom_toTopOf="@id/book_fungicidi_card"
+        android:foreground="?attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/book_herbicidi_icon"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/herbicidi_icon"
+                android:layout_marginStart="12dp"
+                app:tint="@color/strong_yellow"
+                app:layout_constraintTop_toTopOf="@id/book_herbicidi_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/book_herbicidi_text" />
+
+            <TextView
+                android:id="@+id/book_herbicidi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HERBICIDI"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/book_herbicidi_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/book_fungicidi_card"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp"
+        android:translationZ="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_herbicidi_card"
+        android:foreground="?attr/selectableItemBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/book_fungicidi_icon"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/fungicid_icon"
+                android:layout_marginStart="12dp"
+                app:tint="@color/blue"
+                app:layout_constraintTop_toTopOf="@id/book_fungicidi_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/book_fungicidi_text" />
+
+            <TextView
+                android:id="@+id/book_fungicidi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FUNGICIDI"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/book_fungicidi_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,27 +70,11 @@ class MainFragment : Fragment() {
         }
 
         binding.kupiZitariceCard.setOnClickListener {
-
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToLeafyBuyFragment())
+        }
 
-            /*val functions = FirebaseFunctions.getInstance("europe-west1")
-
-            val data = hashMapOf(
-                "lat" to 44.733205,
-                "lng" to 18.085295
-            )
-
-            functions.getHttpsCallable("getProizvodiFromRadius")
-                .call(data)
-                .continueWith {
-                    try {
-
-                        Log.d("TAG", "Preuzimanje sa firebasea: ${it.result?.data.toString()}")
-
-                    } catch (e: Exception) {
-                        Log.e("TAG", "onViewCreated: ", e)
-                    }
-                }*/
+        binding.edukacijaCard.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToLeafyBookFragment())
         }
 
     }

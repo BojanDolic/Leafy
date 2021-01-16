@@ -8,30 +8,37 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
+import com.electroniccode.leafy.databinding.PreparatRecyclerviewElementBinding
+import com.electroniccode.leafy.interfaces.OnAdapterItemClickedListener
 import com.electroniccode.leafy.models.Preparat
 
 class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) :
     RecyclerView.Adapter<LeafyBookPreparatAdapter.PreparatViewHolder>() {
 
+    private lateinit var listener: OnAdapterItemClickedListener
+
+    public fun setOnClickListener(listener: OnAdapterItemClickedListener) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreparatViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.preparat_recyclerview_element, parent, false)
-        return PreparatViewHolder(view)
+        val binding = PreparatRecyclerviewElementBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return PreparatViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PreparatViewHolder, position: Int) {
-
         val preparat = preparati.get(position)
-
-        holder.nazivPreparata.text = preparat?.imePreparata
-        holder.vrstaPreparata.text = preparat?.tipPreparata
+        holder.bindView(preparat)
 
 
-        if(preparat?.slika?.isNotEmpty()!!)
-            Glide.with(holder.itemView.context)
-                .load(preparat.slika)
-                .into(holder.slikaPreparata)
+
+        holder.itemView.setOnClickListener {
+            listener.onItemClicked(preparat)
+        }
 
     }
 
@@ -39,19 +46,25 @@ class LeafyBookPreparatAdapter(val preparati: List<Preparat?>) :
         return preparati.size
     }
 
-    inner class PreparatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PreparatViewHolder(val binding: PreparatRecyclerviewElementBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        var slikaPreparata: ImageView
-        var nazivPreparata: TextView
-        var vrstaPreparata: TextView
+        fun bindView(preparat: Preparat?) {
+            with(binding) {
+                leafyBookNazivPreparata.text = preparat?.imePreparata
+                leafyBookVrstaPreparata.text = preparat?.tipPreparata
 
-        init {
+                if(preparat?.slika?.isNotEmpty()!!)
+                    Glide.with(root.context)
+                        .load(preparat.slika)
+                        .into(leafyBookSlikaPreparata)
 
-            slikaPreparata = itemView.findViewById(R.id.leafy_book_slika_preparata)
-            nazivPreparata = itemView.findViewById(R.id.leafy_book_naziv_preparata)
-            vrstaPreparata = itemView.findViewById(R.id.leafy_book_vrsta_preparata)
+                preparatCard.setOnClickListener {
+                    listener.onItemClicked(preparat)
+                }
+            }
+
+
         }
-
 
     }
 

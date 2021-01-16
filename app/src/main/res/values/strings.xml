@@ -157,6 +157,12 @@
     <string name="lokacija_permission_rationale">Aplikacija Leafy zahtijeva Vašu lokaciju kako bi mogla odrediti Vašu trenutnu lokaciju pri pretraživanju proizvoda u Vašoj blizini.\nAko odbijete korištenje Vaše lokacije neke od funkcija aplikacije neće raditi.</string>
 
     <string name="delete_prodajno_mjesto_dialog_desc">Da li želite obrisati ovo prodajno mjesto ?\n\nBrisanjem ovog prodajnog mjesta gubite mogućnost njegovog korištenja, ali proizvodi povezani sa ovim prodajnim mjestom će ostati.</string>
+    <string name="skeniraj_text">Skeniraj</string>
+    <string name="leafy_vision_objasnjenje_text">Izaberite sliku koju želite skenirati klikom na sliku ispod</string>
+
+    <string name="leafy_book_opis">Leafy book je dio aplikacije gdje poljoprivrednici mogu proširiti svoje znanje o biljkama, bolestima, herbicidima i fungicidima.</string>
+    <string name="vrijeme_primjene_text">Vrijeme primjene</string>
+    <string name="kolicina_primjene_text">Količina primjene</string>
 
 
 </resources>

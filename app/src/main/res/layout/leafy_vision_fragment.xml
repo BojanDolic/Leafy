@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f8f7fc"
-    android:paddingTop="26dp"
     app:layoutDescription="@xml/leafy_vision_fragment_scene"
     tools:context=".fragments.LeafyVisionFragment"
     android:animateLayoutChanges="true">
 
+    <!-- app:cardElevation="0dp"
+     app:strokeColor="#EAEAEA"
+        app:strokeWidth="1dp"-->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/leafy_vision_title_container"
@@ -20,13 +22,12 @@
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         app:cardCornerRadius="12dp"
-        app:cardElevation="0dp"
         app:contentPadding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#EAEAEA"
-        app:strokeWidth="1dp">
+        android:translationZ="12dp"
+        app:cardElevation="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,10 +38,11 @@
                 android:id="@+id/skeniraj_biljku_title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_bold"
+                android:fontFamily="@font/opensans_bold"
                 android:text="LEAFY VISION"
                 android:textAlignment="center"
-                android:textSize="24sp"
+                android:textSize="22sp"
+                android:textColor="@color/darkTextColor"
                 app:layout_constraintBottom_toBottomOf="@id/leafy_vision_icon_container"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/leafy_vision_icon_container"
@@ -50,8 +52,8 @@
                 android:id="@+id/leafy_vision_icon_container"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:cardBackgroundColor="#17008350"
-                app:cardCornerRadius="18dp"
+                app:cardBackgroundColor="#33B6F6DD"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toTopOf="@id/vision_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/nunito_light"
-                android:text="Izaberite sliku koju želite skenirati klikom na sliku ispod"
+                android:fontFamily="@font/opensans_light"
+                android:text="@string/leafy_vision_objasnjenje_text"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -108,10 +110,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="36dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#EAEAEA"
-            app:strokeWidth="1dp">
+            app:cardCornerRadius="12dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -143,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/mainColor"
-            android:text="Skeniraj"
+            android:text="@string/skeniraj_text"
             android:fontFamily="@font/nunito_bold"
             android:textColor="@color/white"
             app:icon="@drawable/scan_icon"
@@ -151,23 +150,9 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             app:layout_anchor="@id/leafy_vision_image_container"
-            app:layout_anchorGravity="bottom|center"/>
+            app:layout_anchorGravity="bottom|center" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <TextView
-        android:id="@+id/skeniraj_biljku_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:fontFamily="@font/nunito_extrabold"
-        android:text="Skenirajte biljku"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/leafy_vision_title_container" />
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -86,6 +86,11 @@ class CreateProdajnoMjestoFragment : Fragment(), OnMapReadyCallback, GoogleMap.O
         addMjestoMarker(p0)
     }
 
+    /**
+     * Dodaje marker na mjesto klika
+     *
+     * @param latLng koordinate klika
+     */
     fun addMjestoMarker(latLng: LatLng?) {
 
         map?.clear()
@@ -105,7 +110,7 @@ class CreateProdajnoMjestoFragment : Fragment(), OnMapReadyCallback, GoogleMap.O
     /**
      * Dodaje krug oko markera da korisnik vizuelno vidi koliko kilometara obuhvata njegovo prodajno mjesto
      *
-     * @param latLng Koordinate gdje će se nalaziti centar kruga
+     * @param latLng Koordinate klika (centar kruga)
      */
     fun addCircle(latLng: LatLng?) {
         val optionsCircle = CircleOptions()
