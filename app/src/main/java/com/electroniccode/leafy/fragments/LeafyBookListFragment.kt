@@ -157,9 +157,7 @@ class LeafyBookListFragment
     fun getKategorija(): String = args.kategorija
 
     override fun onItemClicked(item: Any?) {
-        Log.d("TAG", "onItemClicked: PROVJERAAAA")
         if(item is Preparat?) {
-            Log.d("TAG", "onItemClicked: PROŠLOOOOO PROVJERUUUU")
             findNavController().navigate(
                 LeafyBookListFragmentDirections.actionLeafyBookListFragmentToPreparatDetailsFragment(
                     item

@@ -9,14 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TableRow
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
-import com.electroniccode.leafy.databinding.PreparatDetailsFragmentBinding
-import com.electroniccode.leafy.databinding.PreparatPrimjenaCardBinding
-import com.electroniccode.leafy.databinding.TableRowBinding
-import com.electroniccode.leafy.databinding.TableRowTextItemBinding
+import com.electroniccode.leafy.databinding.*
 import com.electroniccode.leafy.models.Preparat
+import com.electroniccode.leafy.models.Usjev
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.jar.Attributes
 
 class PreparatDetailsFragment : Fragment() {
@@ -57,12 +57,27 @@ class PreparatDetailsFragment : Fragment() {
     fun createPreparatDesign(preparat: Preparat) {
 
         if(preparat.usjevi.isNotEmpty())
-            createTable(preparat)
-
+            createPrimjenaData(preparat)
+        if(preparat.naslovi.isNotEmpty())
+            createOpisPreparata(preparat)
 
     }
 
-    fun createTable(preparat: Preparat) {
+    fun createOpisPreparata(preparat: Preparat) {
+        for(i in preparat.naslovi.indices) {
+
+            val opisItem = LeafyBookElementBinding.inflate(layoutInflater)
+            val opisView = opisItem.root
+
+            opisItem.leafyBookElementTitle.text = preparat.naslovi[i]
+            opisItem.leafyBookElementDesc.text = preparat.opisi[i]
+            opisItem.leafyBookElementImage.visibility = View.GONE
+
+            binding.preparatDetailsContainer.addView(opisView)
+        }
+    }
+
+    fun createPrimjenaData(preparat: Preparat) {
 
         // Prolaz kroz sve elemente (usjeve)
         for(i in preparat.usjevi.indices) {
@@ -71,21 +86,11 @@ class PreparatDetailsFragment : Fragment() {
             val primjenaCard = PreparatPrimjenaCardBinding.inflate(layoutInflater, binding.preparatDetailsContainer, false)
             val primjenaView = primjenaCard.root
 
-            // Za skrivanje i otkrivanje informacija
+            primjenaCard.primjenaBiljkaTitle.text = preparat.usjevi[i].imeUsjeva
+
             primjenaView.setOnClickListener {
-                if(primjenaCard.primjenaInfoContainer.visibility == View.GONE)
-                    primjenaCard.primjenaInfoContainer.visibility = View.VISIBLE
-                else if (primjenaCard.primjenaInfoContainer.visibility == View.VISIBLE)
-                    primjenaCard.primjenaInfoContainer.visibility = View.GONE
+                findNavController().navigate(PreparatDetailsFragmentDirections.actionPreparatDetailsFragmentToTretiranjeUsjevaDetails(preparat.usjevi[i]))
             }
-
-            // Popunjavanje informacija
-            primjenaCard.primjenaBiljkaTitle.text = preparat.usjevi[i]
-            primjenaCard.primjenaKolicinaText.text = preparat.kolicinaPrimjene[i]
-            primjenaCard.primjenaVrijemeText.text = preparat.vrijemePrimjene[i]
-
-            // Default skrivene informacije
-            primjenaCard.primjenaInfoContainer.visibility = View.GONE
 
             binding.preparatDetailsContainer.addView(primjenaView)
 

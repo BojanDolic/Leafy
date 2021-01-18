@@ -142,6 +142,11 @@
         <action
             android:id="@+id/action_bookViewerFragment_to_leafyVisionFragment"
             app:popUpTo="@id/leafyVisionFragment" />
+        <action
+            android:id="@+id/action_bookViewerFragment_to_preparatDetailsFragment"
+            app:destination="@id/preparatDetailsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bookViewerFragment" />
     </fragment>
     <fragment
         android:id="@+id/forumFragment"
@@ -423,6 +428,20 @@
             app:argType="com.electroniccode.leafy.models.Preparat"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_preparatDetailsFragment_to_tretiranjeUsjevaDetails"
+            app:destination="@id/tretiranjeUsjevaDetails"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/preparatDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tretiranjeUsjevaDetails"
+        android:name="com.electroniccode.leafy.fragments.TretiranjeUsjevaDetails"
+        android:label="TretiranjeUsjevaDetails" >
+        <argument
+            android:name="usjev"
+            app:argType="com.electroniccode.leafy.models.Usjev" />
     </fragment>
 
 </navigation>

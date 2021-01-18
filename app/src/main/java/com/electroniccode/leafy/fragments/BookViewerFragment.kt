@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +17,18 @@ import com.bumptech.glide.Glide
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.adapters.LeafyBookPreparatAdapter
 import com.electroniccode.leafy.databinding.BookViewerFragmentBinding
+import com.electroniccode.leafy.databinding.LeafyBookElementBinding
+import com.electroniccode.leafy.databinding.LeafyBookPreparatiElementBinding
 import com.electroniccode.leafy.getDocuments
+import com.electroniccode.leafy.interfaces.OnAdapterItemClickedListener
 import com.electroniccode.leafy.models.Preparat
 import com.electroniccode.leafy.viewmodels.BookViewerViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import java.lang.StringBuilder
 
-class BookViewerFragment : Fragment() {
+class BookViewerFragment
+    : Fragment(), OnAdapterItemClickedListener {
 
     private lateinit var viewModel: BookViewerViewModel
 
@@ -60,39 +65,34 @@ class BookViewerFragment : Fragment() {
                 .load(bolest?.slikaBolesti)
                 .into(binding.bookViewerImage)
 
-            for (i in bolest?.naslovi!!) {
+            for (i in bolest?.naslovi!!.indices) {
 
-                val index = bolest.naslovi.indexOf(i)
+                val bookElement =
+                    LeafyBookElementBinding.inflate(layoutInflater, binding.bookScrollContainer, false)
 
-                val bookElement = layoutInflater.inflate(R.layout.leafy_book_element, binding.root, false)
-
-                bookElement.findViewById<TextView>(R.id.leafy_book_element_title).text = bolest.naslovi.get(index)
-                val opisElement = bookElement.findViewById<TextView>(R.id.leafy_book_element_desc)
+                bookElement.leafyBookElementTitle.text = bolest.naslovi[i]
 
                 val stringBuilder = StringBuilder("")
-                val stringovi: List<String> = bolest.opis?.get(index)?.split("\\n")!!
-
-
+                val stringovi: List<String> = bolest.opis?.get(i)?.split("\\n")!!
 
                 if(stringovi.size > 0) {
                     for (string in stringovi) {
                         stringBuilder.append("\n" + string.trim())
-                        opisElement.text = stringBuilder
+                        bookElement.leafyBookElementDesc.text = stringBuilder
                     }
                 } else {
-                    opisElement.text = bolest.opis.get(index)
+                    bookElement.leafyBookElementDesc.text = bolest.opis[i]
                 }
 
-                //bookElement.findViewById<TextView>(R.id.leafy_book_element_desc).text = bolest.opis?.get(index)
+                val slika =
+                    bookElement.leafyBookElementImage
 
-                val slika = bookElement.findViewById<ImageView>(R.id.leafy_book_element_image)
-
-                bolest.slike?.let {
-                    if(index < it.size) {
-                        if (!it[index].isEmpty()) {
+                bolest.slike?.let { slike ->
+                    if(i < slike.size) {
+                        if (!slike[i].isEmpty()) {
 
                             Glide.with(requireContext())
-                                .load(it.get(index))
+                                .load(slike[i])
                                 .into(slika)
 
                         } else slika.visibility = View.GONE
@@ -101,7 +101,7 @@ class BookViewerFragment : Fragment() {
 
                 } ?: run { slika.visibility = View.GONE }
 
-                binding.bookScrollContainer.addView(bookElement)
+                binding.bookScrollContainer.addView(bookElement.root)
 
             }
 
@@ -110,20 +110,11 @@ class BookViewerFragment : Fragment() {
 
                     val preparati = database.getDocuments<Preparat>(bolest.preparati, "preparati")
 
-                    preparati.let {
+                    preparati.let { _preparati ->
 
-                        if(it.size > 0) {
-
+                        if(_preparati.size > 0) {
                             CoroutineScope(Dispatchers.Main).launch {
-                                val preparatiElement = layoutInflater.inflate(R.layout.leafy_book_preparati_element, binding.root, false)
-                                val preparatRecycler = preparatiElement.findViewById<RecyclerView>(R.id.leafy_book_preparati_recycler)
-
-                                val preparatiAdapter = LeafyBookPreparatAdapter(it)
-
-                                preparatRecycler.adapter = preparatiAdapter
-                                preparatRecycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-
-                                binding.bookScrollContainer.addView(preparatiElement)
+                                createAdapterAndInflatePreparatiLayout(_preparati)
                             }
 
                         }
@@ -132,28 +123,6 @@ class BookViewerFragment : Fragment() {
 
                 }
 
-
-                //Log.d("TAG", "onViewCreated: ${preparati}")
-
-                /*database.document(bolest.preparati.get(0)).get().addOnSuccessListener {
-
-                    val preparat = it.toObject(Preparat::class.java)
-
-                    val preparati = listOf(preparat)
-                    val preparatiAdapter = LeafyBookPreparatAdapter(preparati)
-
-                    val preparatiElement = layoutInflater.inflate(R.layout.leafy_book_preparati_element, binding.root, false)
-
-                    val preparatRecycler = preparatiElement.findViewById<RecyclerView>(R.id.leafy_book_preparati_recycler)
-                    preparatRecycler.adapter = preparatiAdapter
-                    preparatRecycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-
-                    binding.bookScrollContainer.addView(preparatiElement)
-
-                }*/
-
-
-
             }
 
         }
@@ -161,6 +130,35 @@ class BookViewerFragment : Fragment() {
 
     }
 
+    /**
+     * Kreira potreban layout za izlistavanje svih preparata za izabranu bolest
+     * Kreira adapter i postavlja ga na recyclerview inflateovanog layouta
+     *
+     * @param preparati Preparati preuzeti iz baze koji pomažu u tretiranju ove bolesti
+     * @see Preparat
+     */
+    fun createAdapterAndInflatePreparatiLayout(preparati: List<Preparat?>) {
+        val preparatiElement =
+            LeafyBookPreparatiElementBinding.inflate(layoutInflater, binding.bookScrollContainer, false)
+
+        val preparatiAdapter = LeafyBookPreparatAdapter(preparati)
+        preparatiAdapter.setOnClickListener(this)
+
+        preparatiElement.leafyBookPreparatiRecycler.apply {
+            this.adapter = preparatiAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        binding.bookScrollContainer.addView(preparatiElement.root)
+    }
+
+    override fun onItemClicked(item: Any?) {
+        item?.let {
+            if(it is Preparat?)
+                findNavController().navigate(BookViewerFragmentDirections.actionBookViewerFragmentToPreparatDetailsFragment(it))
+
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
