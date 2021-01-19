@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.BiljkaDetailsFragment">
+
+        <ImageView
+            android:id="@+id/biljka_details_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/jabuke_placeholder"
+            app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.5" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-48dp"
+        android:layout_below="@id/biljka_details_image"
+        android:paddingTop="6dp"
+        android:translationZ="8dp"
+        android:background="@drawable/curved_top_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/biljke_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Naslov"
+            android:fontFamily="@font/opensans_bold"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:textColor="@color/darkTextColor"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="6dp">
+
+            <LinearLayout
+                android:id="@+id/biljke_details_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

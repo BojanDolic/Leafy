@@ -299,7 +299,7 @@ class BuyFragmentMap : Fragment(), OnMapReadyCallback {
         dropdown.setAdapter(adapter)
 
         if (izabranProizvod.isNotEmpty()) {
-            dropdown.setText(izabranProizvod)
+            dropdown.setText(izabranProizvod, false)
             binding.buySearchBtn.isEnabled = true
         }
 

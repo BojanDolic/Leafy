@@ -18,7 +18,9 @@ object Constants {
 
     //region Leafy book kategorije
     const val KATEGORIJA_BILJKE = "biljke"
-    const val KATEGORIJA_FUNGICIDI = "preparati"
+    const val KATEGORIJA_FUNGICIDI = "preparati Fungicid"
+    const val KATEGORIJA_HERBICID = "preparati Herbicid"
+    const val KATEGORIJA_BOLESTI = "bolesti"
     //endregion
 
     val proizvodi = arrayOf(

@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.electroniccode.leafy.adapters.BiljkeListAdapter
+import com.electroniccode.leafy.adapters.BolestiRecyclerAdapter
 import com.electroniccode.leafy.adapters.LeafyBookPreparatAdapter
 import com.electroniccode.leafy.databinding.LeafyBookListFragmentBinding
 import com.electroniccode.leafy.interfaces.OnAdapterItemClickedListener
 import com.electroniccode.leafy.models.Biljka
+import com.electroniccode.leafy.models.Bolest
 import com.electroniccode.leafy.models.Preparat
 import com.electroniccode.leafy.util.Constants
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
@@ -26,6 +28,7 @@ import com.google.android.datatransport.runtime.scheduling.SchedulingConfigModul
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Job
 
 
 class LeafyBookListFragment
@@ -37,6 +40,9 @@ class LeafyBookListFragment
     private val args: LeafyBookListFragmentArgs by navArgs()
 
     private var kategorija = ""
+    private var kategorijaFormatted: List<String> = listOf()
+
+    private lateinit var job: Job
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +59,8 @@ class LeafyBookListFragment
 
         if(kategorija.isNotEmpty()) {
 
-            val query = FirebaseFirestore.getInstance().collection(kategorija)
+            kategorijaFormatted = kategorija.split(" ")
+            val query = FirebaseFirestore.getInstance().collection(kategorijaFormatted[0])
 
             setupPagingConfig(query)
 
@@ -73,39 +80,51 @@ class LeafyBookListFragment
             .setPageSize(10)
             .build()
 
-        if(TextUtils.equals(kategorija, Constants.KATEGORIJA_FUNGICIDI)) {
-            getFungicide(query)
+        if(TextUtils.equals(kategorija, Constants.KATEGORIJA_FUNGICIDI)
+            || TextUtils.equals(kategorija, Constants.KATEGORIJA_HERBICID)) {
+            getPreparate(query)
         }
         else {
             val options = getOptionsBasedOnKategorija(query, pagedConfig)
 
             val adapter = getAdapterBasedOnKategorija(options)
 
-            binding.bookListRecycler.apply {
-                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            if(TextUtils.equals(kategorija, Constants.KATEGORIJA_BILJKE))
+                binding.bookListRecycler.apply {
+                    layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    this.adapter = adapter
+                }
+            else binding.bookListRecycler.apply {
+                layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
             }
         }
 
     }
 
-    fun getFungicide(query: Query) {
-        query.whereEqualTo("tipPreparata", "Fungicid").get().addOnCompleteListener {
+    //region Za fungicide adapter
+    fun getPreparate(query: Query) {
+        query.whereEqualTo("tipPreparata", kategorijaFormatted[1]).get().addOnCompleteListener {
             if(it.isSuccessful)
-                setupFungicidiAdapter(it.result.toObjects(Preparat::class.java))
+                setupPreparatiAdapter(it.result.toObjects(Preparat::class.java))
+        }.addOnFailureListener {
+            Log.e("TAG", "getPreparate: ", it)
         }
     }
 
-    fun setupFungicidiAdapter(preparati: List<Preparat>) {
+    fun setupPreparatiAdapter(preparati: List<Preparat>) {
         val adapter = LeafyBookPreparatAdapter(preparati)
         adapter.setOnClickListener(this)
 
-        binding.bookListRecycler.apply {
-            this.adapter = adapter
-            layoutManager = LinearLayoutManager(requireContext())
+        _binding?.let {
+            binding.bookListRecycler.apply {
+                this.adapter = adapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
         }
-    }
 
+    }
+    //endregion
     /**
      * Kreira potreban adapter na osnovu prethodno izabrane kategorije
      *
@@ -114,9 +133,17 @@ class LeafyBookListFragment
      */
     fun getAdapterBasedOnKategorija(options: FirestorePagingOptions<*>): RecyclerView.Adapter<*> {
         if(TextUtils.equals(kategorija, Constants.KATEGORIJA_BILJKE))
-            return BiljkeListAdapter(options as FirestorePagingOptions<Biljka>)
+            return BiljkeListAdapter(options as FirestorePagingOptions<Biljka>).apply {
+                setOnClickListener(this@LeafyBookListFragment)
+            }
+        else if(TextUtils.equals(kategorija, Constants.KATEGORIJA_BOLESTI))
+            return BolestiRecyclerAdapter(options as FirestorePagingOptions<Bolest>).apply {
+                setOnClickListener(this@LeafyBookListFragment)
+            }
 
-        return BiljkeListAdapter(options as FirestorePagingOptions<Biljka>)
+        return BiljkeListAdapter(options as FirestorePagingOptions<Biljka>).apply {
+            setOnClickListener(this@LeafyBookListFragment)
+        }
     }
 
 
@@ -141,6 +168,12 @@ class LeafyBookListFragment
                 .setLifecycleOwner(this)
                 .setQuery(query, pagedConfig, Biljka::class.java)
                 .build()
+        else if(TextUtils.equals(kategorija, Constants.KATEGORIJA_BOLESTI))
+            return FirestorePagingOptions.Builder<Bolest>()
+                .setLifecycleOwner(this)
+                .setQuery(query, pagedConfig, Bolest::class.java)
+                .build()
+
         return FirestorePagingOptions.Builder<Biljka>()
             .setLifecycleOwner(this)
             .setQuery(query, pagedConfig, Biljka::class.java)
@@ -160,6 +193,20 @@ class LeafyBookListFragment
         if(item is Preparat?) {
             findNavController().navigate(
                 LeafyBookListFragmentDirections.actionLeafyBookListFragmentToPreparatDetailsFragment(
+                    item
+                )
+            )
+        }
+        else if(item is Bolest) {
+            findNavController().navigate(
+                LeafyBookListFragmentDirections.actionLeafyBookListFragmentToBookViewerFragment(
+                    item
+                )
+            )
+        }
+        else if(item is Biljka) {
+            findNavController().navigate(
+                LeafyBookListFragmentDirections.actionLeafyBookListFragmentToBiljkaDetailsFragment(
                     item
                 )
             )

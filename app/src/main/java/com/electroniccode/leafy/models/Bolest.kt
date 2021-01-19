@@ -9,8 +9,8 @@ import java.io.Serializable
 data class Bolest(
     val imeBolesti: String = "",
     val slikaBolesti: String = "",
-    val naslovi: List<String>? = null,
-    val opis: List<String>? = null,
-    val slike: List<String>? = null,
-    val preparati: List<String>? = null
+    val naslovi: List<String> = listOf(),
+    val opis: List<String> = listOf(),
+    val slike: List<String> = listOf(),
+    val preparati: List<String> = listOf()
 ) : Serializable

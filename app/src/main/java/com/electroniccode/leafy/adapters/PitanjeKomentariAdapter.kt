@@ -192,7 +192,7 @@ class PitanjeKomentariAdapter(
             recycler.visibility = View.VISIBLE
         }
 
-        komentariCount.text = "Odgovori (${snapshots.size})"
+        komentariCount.text = "Odgovori ($itemCount)"
 
 
     }

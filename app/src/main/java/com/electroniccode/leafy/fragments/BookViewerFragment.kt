@@ -25,6 +25,7 @@ import com.electroniccode.leafy.models.Preparat
 import com.electroniccode.leafy.viewmodels.BookViewerViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
+import java.lang.Exception
 import java.lang.StringBuilder
 
 class BookViewerFragment
@@ -39,13 +40,13 @@ class BookViewerFragment
 
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    var job: Job? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = BookViewerFragmentBinding.inflate(inflater, container, false)
-
-        //requireActivity().setActionBar(binding.bookViewerToolbar)
 
         return binding.root
     }
@@ -105,21 +106,26 @@ class BookViewerFragment
 
             }
 
-            if(bolest.preparati != null) {
-                GlobalScope.launch {
+            if(bolest.preparati.isNotEmpty()) {
+                job = GlobalScope.launch {
 
-                    val preparati = database.getDocuments<Preparat>(bolest.preparati, "preparati")
+                    try {
+                        val preparati = database.getDocuments<Preparat>(bolest.preparati, "preparati")
 
-                    preparati.let { _preparati ->
+                        preparati.let { _preparati ->
 
-                        if(_preparati.size > 0) {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                createAdapterAndInflatePreparatiLayout(_preparati)
+                            if(_preparati.size > 0) {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    createAdapterAndInflatePreparatiLayout(_preparati)
+                                }
+
                             }
 
                         }
-
+                    } catch (e: Exception) {
+                        Log.e("TAG", "onViewCreated: ", e)
                     }
+
 
                 }
 
@@ -170,6 +176,7 @@ class BookViewerFragment
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        job?.cancel()
     }
 
 }

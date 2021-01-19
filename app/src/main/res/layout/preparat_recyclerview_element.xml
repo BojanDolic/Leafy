@@ -39,20 +39,23 @@
 
                 <TextView
                     android:id="@+id/leafy_book_naziv_preparata"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Retengo"
                     app:layout_constraintStart_toEndOf="@id/image_ruler"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="24dp"
+                    app:layout_constraintBottom_toTopOf="@id/leafy_book_vrsta_preparata"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="3dp"
+                    android:textAlignment="center"
                     android:fontFamily="@font/opensans_extrabold"
                     android:textColor="@color/white"
                     android:textSize="36sp"
                     android:maxLines="1"
-                    android:ellipsize="end"/>
+                    android:ellipsize="end"
+                    app:layout_constraintVertical_chainStyle="packed"/>
 
 
                 <TextView
@@ -64,7 +67,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/leafy_book_naziv_preparata"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="24dp"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/opensans_lightitalic"
                     android:textColor="@color/white"

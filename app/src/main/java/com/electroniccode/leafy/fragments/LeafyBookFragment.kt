@@ -32,10 +32,14 @@ class LeafyBookFragment : Fragment() {
                     Constants.KATEGORIJA_BILJKE))
         }
         binding.bookBolestiCard.setOnClickListener {
-
+            findNavController().navigate(
+                LeafyBookFragmentDirections.actionLeafyBookFragmentToLeafyBookListFragment(
+                    Constants.KATEGORIJA_BOLESTI))
         }
         binding.bookHerbicidiCard.setOnClickListener {
-
+            findNavController().navigate(
+                LeafyBookFragmentDirections.actionLeafyBookFragmentToLeafyBookListFragment(
+                    Constants.KATEGORIJA_HERBICID))
         }
         binding.bookFungicidiCard.setOnClickListener {
             findNavController().navigate(
