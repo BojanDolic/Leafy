@@ -57,7 +57,7 @@ class ProfileSettingsViewModel(app: Application) : AndroidViewModel(app) {
             val result = storageRef.putFile(finalImageUri).await()
             if(result.task.isSuccessful) {
                 val url = storageRef.downloadUrl.await().toString()
-                database.collection("korisnici").document(uid).update("slikaKorisnika", url)
+                database.collection("korisnici").document(uid).update("slikaKorisnika", url).await()
                 isUpdating.value = false
 
             } else isUpdating.value = false

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.electroniccode.leafy.R
 import com.electroniccode.leafy.databinding.ProfilFragmentBinding
@@ -165,21 +166,33 @@ class ProfilFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
             binding.profilRankKorisnikaText.text = UtilFunctions.getRank(it.najboljihOdgovora)
 
-            val progress = UtilFunctions.getPercentageToNextRank(it.najboljihOdgovora)
+            if(it.najboljihOdgovora >= 15)
+                hideRankPercentage()
+            else {
+                binding.profilProgressIndicator.visibility = View.VISIBLE
 
-            binding.profilStatistikaProgress.text =
-                String.format(resources.getString(R.string.progress_placeholder_text), progress)
-            binding.profilProgressIndicator.progress = progress
+                val progress = UtilFunctions.getPercentageToNextRank(it.najboljihOdgovora)
+
+                binding.profilStatistikaProgress.text =
+                    String.format(resources.getString(R.string.progress_placeholder_text), progress)
+                binding.profilProgressIndicator.progress = progress
+            }
+
 
             Glide.with(requireContext())
                 .load(it.slikaKorisnika)
                 .transform(CircleCrop())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.profile_icon_placeholder)
                 .into(binding.profileIcon)
         }
 
     }
 
+    fun hideRankPercentage() {
+        binding.profilProgressIndicator.visibility = View.GONE
+        binding.profilStatistikaProgress.text = "Dostigli ste najveći rank !"
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

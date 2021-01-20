@@ -92,6 +92,7 @@ object UtilFunctions {
             if(this < 5) {  toNextRank = RANKOVI.FARMER_POCETNIK.odgovora }
             else if(this < 10 && this >= 5) {  toNextRank = RANKOVI.FARMER_AMATER.odgovora }
             else if(this < 15 && this >= 10) {  toNextRank = RANKOVI.NAPREDNI_FARMER.odgovora }
+            else if(this >= 15) {  toNextRank = brojNajboljihOdgovora }
 
             toNextRank
         }

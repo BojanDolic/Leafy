@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/profil_menu_podesavanja"
-        android:title="@string/podesavanja_profila_text" />
+        android:title="@string/podesavanja_profila_text"/>
 
     <item
         android:id="@+id/profil_menu_logout"

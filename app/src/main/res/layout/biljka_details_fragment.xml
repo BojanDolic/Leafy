@@ -12,7 +12,6 @@
             android:layout_height="250dp"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/jabuke_placeholder"
             app:layout_collapseMode="parallax"
             app:layout_collapseParallaxMultiplier="0.5" />
 

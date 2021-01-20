@@ -84,7 +84,6 @@ class PitanjeKomentariAdapter(
         // Ako je autor komentara, ima mogućnost brisanja svog komentara
         // Ako je autor pitanja, ima mogućnost brisanja svog komentara, a ostale može označiti kao najbolje osim već označenog
 
-
         auth.currentUser?.let {
 
             if (it.uid == pitanje.idAutora) {
