@@ -2,8 +2,6 @@
 
     <string name="app_name">Leafy</string>
 
-    <string name="mapbox_access_token">pk.eyJ1IjoiZWxlY3Ryb25pY2NvZGUiLCJhIjoiY2tqZG8yYm94MmM1aTJ3cnVsaHIyMWhyNSJ9.CEE6JuJApgJ_emqEDD-pUQ</string>
-
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="prijavi_se_text">PRIJAVI SE</string>
@@ -15,8 +13,6 @@
     <string name="prodaj_zitarice_desc">Prodajte svoje proizvode okolini</string>
     <string name="prodaj_zitarice_text">Leafy trade</string>
     <string name="leafy_book_title">Leafy book</string>
-    <string name="vrijeme_text">Vrijeme</string>
-    <string name="vrijeme_desc">Pogledajte vremensku prognozu</string>
     <string name="profil_text">Profil</string>
     <string name="profil_desc">Uradite izmjene oko profila i objava</string>
     <string name="leafy_book_desc">Informacije o biljkama i herbicidima</string>
@@ -134,7 +130,6 @@
 
     <string name="prodajna_mjesta_text">Prodajna mjesta</string>
     <string name="uredi_objave_text">Uredi objave</string>
-    <string name="dodajte_prodajno_mjesto_text">Dodajte prodajno mjesto</string>
     <string name="no_mjesto_warning_description">Trenutno nemate ni jedno prodajno mjesto. Dodajte prodajno mjesto da bi mogli prodavati žitarice.</string>
     <string name="upozorenje_text">Upozorenje</string>
     <string name="leafy_trade_desc">Poljoprivrednik ste i proizvodite žitarice, voće i povrće ?\nUz pomoć leafy trade-a prodajte svoje proizvode ljudima u okolini.
@@ -161,10 +156,8 @@
     <string name="leafy_vision_objasnjenje_text">Izaberite sliku koju želite skenirati klikom na sliku ispod</string>
 
     <string name="leafy_book_opis">Leafy book je dio aplikacije gdje poljoprivrednici mogu proširiti svoje znanje o biljkama, bolestima, herbicidima i fungicidima.</string>
-    <string name="vrijeme_primjene_text">Vrijeme primjene</string>
-    <string name="kolicina_primjene_text">Količina primjene</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cuvanje_podataka_text">Čuvanje podataka...</string>
 
 
 </resources>

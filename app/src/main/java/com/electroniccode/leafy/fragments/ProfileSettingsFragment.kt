@@ -76,7 +76,7 @@ class ProfileSettingsFragment : Fragment() {
 
         viewModel.isUpdating.observe(viewLifecycleOwner, { updating ->
             if (updating) {
-                binding.profileSettingsSaveBtn.text = "Čuvanje podataka..."
+                binding.profileSettingsSaveBtn.text = getString(R.string.cuvanje_podataka_text)
                 binding.profileSettingsSaveBtn.isEnabled = false
             } else {
                 binding.profileSettingsSaveBtn.text =
@@ -129,9 +129,7 @@ class ProfileSettingsFragment : Fragment() {
 
                 GlobalScope.launch {
                     withContext(Dispatchers.Default) {
-
                         viewModel.updateUserProfilePic(uri, it.uid)
-
                     }
                 }
             }

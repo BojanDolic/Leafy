@@ -38,24 +38,33 @@ class TretiranjeUsjevaDetails : Fragment() {
         }
     }
 
+    /**
+     * Kreira kartice koje daju informacije kako tretirati bolesti
+     *
+     * @param usjev Usjev kojeg treba tretirati (informacije o bolesti i načinu tretiranja)
+     */
     fun createBolestiCards(usjev: Usjev) {
-        // Prolazimo kroz sve kolicine primjena jer bolesti mogu biti prazne
+        // Prolazimo kroz sva vremena primjene jer bolesti i broj primjena mogu biti prazne
         // (jedan preparat može se koristiti za skupinu bolesti koje su grupisane u opšti card)
-        for(i in usjev.kolicinaPrimjene.indices) {
+        for(i in usjev.vrijemePrimjene.indices) {
 
             val bolestCard = DetaljiTretiranjaCardBinding.inflate(layoutInflater, binding.tretiranjePreparatContainer, false)
             val bolestCardView = bolestCard.root
 
-            if(usjev.bolesti.isNotEmpty())
+            if(usjev.kolicinaPrimjene[i].isNotEmpty())
+                bolestCard.tretiranjeKolicinaDesc.text = usjev.kolicinaPrimjene[i]
+            else bolestCard.tretiranjeKolicinaContainer.visibility = View.GONE
+
+            if(usjev.bolesti[i].isNotEmpty())
                 bolestCard.tretiranjeBolestTitle.text = usjev.bolesti[i]
             else bolestCard.tretiranjeBolestTitle.text = usjev.imeUsjeva
 
-            bolestCard.tretiranjeKolicinaDesc.text = usjev.kolicinaPrimjene[i]
+
             bolestCard.tretiranjeVrijemeDesc.text = usjev.vrijemePrimjene[i]
 
             // Ako postoji broj primjena prikazuje tekst
             // U protivnom skriva taj podatak
-            if(usjev.brojPrimjena.isNotEmpty())
+            if(usjev.brojPrimjena[i].isNotEmpty())
                 bolestCard.tretiranjeBrojprimjeneDesc.text = usjev.brojPrimjena[i]
             else bolestCard.tretiranjeBrojprimjeneContainer.visibility = View.GONE
 

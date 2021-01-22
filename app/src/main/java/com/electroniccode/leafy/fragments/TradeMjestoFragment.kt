@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.NavigationUI
 import com.electroniccode.leafy.R
-import com.electroniccode.leafy.databinding.SpinnerLoadingItemBinding
 import com.electroniccode.leafy.databinding.TradeMjestoFragmentBinding
 import com.electroniccode.leafy.models.Mjesto
 import com.electroniccode.leafy.viewmodels.LeafyTradeViewModel

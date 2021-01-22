@@ -2,6 +2,7 @@ package com.electroniccode.leafy.viewmodels
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,12 +39,18 @@ class ProfileSettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun updateUserProfileName(username: String, uid: String) {
         isUpdating.value = true
-        database.collection("korisnici").document(uid).update("korisnickoIme", username).addOnCompleteListener {
-            isUpdating.value = false
-        }
+        database.collection("korisnici").document(uid).update("korisnickoIme", username)
+            .addOnCompleteListener {
+                isUpdating.value = false
+            }
     }
 
-
+    /**
+     * Funkcija za upload izabrane slike na firebase storage
+     *
+     * @param imageUri Uri slike koja je izabrana u galeriji
+     * @param uid UID korisnika, ujedno i ime slike u storage-u
+     */
     fun updateUserProfilePic(imageUri: Uri, uid: String) {
         viewModelScope.launch {
 
@@ -54,13 +61,14 @@ class ProfileSettingsViewModel(app: Application) : AndroidViewModel(app) {
 
             val storageRef = storage.reference.child("slikeKorisnika/${uid}")
 
-            val result = storageRef.putFile(finalImageUri).await()
-            if(result.task.isSuccessful) {
-                val url = storageRef.downloadUrl.await().toString()
-                database.collection("korisnici").document(uid).update("slikaKorisnika", url).await()
-                isUpdating.value = false
+            val task = storageRef.putFile(finalImageUri).await()
 
-            } else isUpdating.value = false
+            Log.d("TAG", "updateUserProfilePic: ${task.error}")
+
+            val url = storageRef.downloadUrl.await()
+            database.collection("korisnici").document(uid).update("slikaKorisnika", url.toString()).await()
+            isUpdating.value = false
+
 
         }
     }
